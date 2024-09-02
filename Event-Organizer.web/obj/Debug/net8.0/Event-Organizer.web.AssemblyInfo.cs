@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Event-Organizer.web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2c163a96b6fe4f139e6c9ad1b2ea401e03939f1b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+481307c3a1be72bed5b2cbfd1331813705238b5f")]
 [assembly: System.Reflection.AssemblyProductAttribute("Event-Organizer.web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Event-Organizer.web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

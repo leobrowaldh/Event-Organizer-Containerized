@@ -1,0 +1,35 @@
+﻿@page
+@model Event_Organizer.web.Pages.UserSelectModel
+@{
+}
+
+<div class="text-center">
+	<form method="POST">
+		<div>
+			<input asp-for="NewUser"
+				   placeholder="Input Name" />
+		</div>
+		<input type="submit" />
+	</form>
+</div>
+
+<div class="row">
+	<table class="table">
+		<thead class="thead-inverse">
+			<tr>
+				<th>User Name</th>
+			</tr>
+		</thead>
+		<tbody>
+			@if (Model.Users is not null)
+			{
+				@foreach (User user in Model.Users)
+				{
+					<tr>
+						<td>@user.Name</td>
+					</tr>
+				}
+			}
+		</tbody>
+	</table>
+</div>
