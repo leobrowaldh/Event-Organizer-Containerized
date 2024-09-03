@@ -1,1 +1,25 @@
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# User-specific folders
+.idea/
 .vs/
+*_ReSharper.Caches/
+
+# Build results
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+[Rr]eleases/
+
+# VS Code directories
+.vscode/
+
+# Other files and folders
+*.log
+*.tlog
