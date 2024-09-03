@@ -5,8 +5,8 @@
 	}
 	public class Activity
 	{
-
-	}
+        public string Name { get; set; }
+    }
 	public class User
 	{
 

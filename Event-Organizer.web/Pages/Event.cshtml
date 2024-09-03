@@ -1,6 +1,27 @@
 ﻿@page
+@using Event_Organizer.web.DataAccess
 @model Event_Organizer.web.Pages.EventModel
 @{
 
-
 }
+
+<div class="row">
+	<table class="table">
+		<thead class="thead-inverse">
+			<tr>
+				<th>Activities</th>
+			</tr>
+		</thead>
+		<tbody>
+			@if (Model.Activities is not null)
+			{
+				@foreach (Activity activity in Model.Activities)
+				{
+					<tr>
+						<td>@activity.Name</td>
+					</tr>
+				}
+			}
+		</tbody>
+	</table>
+</div>

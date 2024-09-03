@@ -1,7 +1,11 @@
+using Event_Organizer.web.DataAccess;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+//Add Data access injection:
+builder.Services.AddScoped<IDataAccess, DataAccess>();
 
 var app = builder.Build();
 
