@@ -5,23 +5,26 @@ namespace Event_Organizer.web.DataAccess
 	{
 		public Event GetEvent(int eventId)
 		{
-			throw new NotImplementedException();
+			return new Event() { Name = "The mysterious event", OpenForEditing = true };
 		}
 
 		public ICollection<Activity> GetEventActivities(int eventId)
 		{
-			List<Activity> activities = [new Activity() { Name = "Movies" }, new Activity() { Name = "Restaurant" }, new Activity() { Name = "Bar" }];
+			List<Activity> activities = [new Activity() { Name = "Movies", Description = "basd asd lnjasnd nklasknldnkals dknlasnd nklasnkld d asd " }, 
+				new Activity() { Name = "Restaurant", Description = "basd asd lnjasnd nklasknldnkals dknlasnd nklasnkld d asd "  }, 
+				new Activity() { Name = "Bar", Description = "basd asd lnjasnd nklasknldnkals dknlasnd nklasnkld d asd "  }];
 			return activities;
 		}
 
 		public ICollection<User> GetEventUsers(int eventId)
 		{
-			throw new NotImplementedException();
+			return [new User() { Name = "Ahmed"}, new User() { Name = "Olle" }, new User() { Name = "Pepe" },
+			new User() { Name = "Tobias"}, new User() { Name = "Yasmine"}, new User() { Name = "Martin"}];
 		}
 
 		public User GetUser(int userId)
 		{
-			throw new NotImplementedException();
+			return new User() { Name = "Olle" };
 		}
 
 		public bool PostActivity(Activity activity)
