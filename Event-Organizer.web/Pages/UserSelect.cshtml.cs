@@ -1,4 +1,4 @@
-using Event_Organizer.web.DataAccess;
+using Data.DataAccess;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 

@@ -1,7 +1,6 @@
-using Event_Organizer.web.DataAccess;
-
 using Data.Context;
 using Microsoft.EntityFrameworkCore;
+using Data.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
