@@ -4,35 +4,39 @@
 @{
 }
 
-<div class="container mt-4">
+<div class="container mt-5">
     <div class="row">
         <!-- Table on the left -->
         <div class="col-md-6">
-            <table class="table table-striped">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>Who are you?</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (Model.Users is not null)
-                    {
-                        @foreach (User user in Model.Users)
+            <div class="bg-white p-0 rounded shadow">
+                <table class="table table-striped mb-0">
+                    <thead>
+                        <tr>
+                            <th class="bg-primary text-white">Who are you?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Users is not null)
+
                         {
-                            <tr>
-                                <td>@user.Name</td>
-                            </tr>
+                            @foreach (User user in Model.Users)
+
+                            {
+                                <tr>
+                                    <td>@user.Name</td>
+                                </tr>
+                            }
                         }
-                    }
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <!-- Form on the right -->
         <div class="col-md-6 d-flex flex-column align-items-center">
-            <!-- Text above the form -->
-            <p class="mb-2">...Not in the list?</p>
-            <form method="POST" class="w-75">
+            <!-- Text above the form with consistent background and margin -->
+            <p class="bg-primary text-white p-2 rounded mb-2 w-75 text-center">...Not in the list?</p>
+            <form method="POST" class="w-75 bg-white p-4 rounded shadow">
                 <div class="form-group">
                     <input asp-for="NewUser" class="form-control" placeholder="Enter your name" />
                 </div>
