@@ -27,13 +27,32 @@ namespace Event_Organizer.web.Pages
 		{
 			if (EventName is not null)
 			{
-				_dataAccess.PostEvent(new Event { Name = EventName });
-				return RedirectToPage("/UserSelect");
+				Event newEvent = new Event { Name = EventName, Id = Guid.NewGuid() };
+				_dataAccess.PostEvent(newEvent);
+
+				// Store event info in TempData to pass to the confirmation page
+				TempData["EventId"] = newEvent.Id;
+
+                // Build the full URL including scheme, host, and path
+                var request = HttpContext.Request;
+                string scheme = request.Scheme; // "http" or "https"
+                string host = request.Host.Value; // "localhost:5000" or "www.yoursite.com"
+                string path = Url.Page("/UserSelect", new { eventId = newEvent.Id }); // Build URL path
+
+                // Combine to create the full URL
+                string FullEventLink = $"{scheme}://{host}{path}";
+
+                // Store the full URL in TempData or use it directly
+                TempData["EventLink"] = FullEventLink;
+
+                // Redirect to the confirmation page
+                return RedirectToPage("/EventConfirmation");
 			}
 			else
 			{
 				return Page(); //to original page
 			}
 		}
+
 	}
 }

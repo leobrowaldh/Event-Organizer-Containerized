@@ -1,0 +1,19 @@
+﻿@page
+@model Event_Organizer.web.Pages.EventConfirmationModel
+@{
+    ViewData["Title"] = "Event Confirmation";
+}
+
+<div class="text-center bg-white p-4 rounded shadow" style="max-width: 500px; margin: auto; margin-top: 50px;">
+    <h3>Event Created!</h3>
+    <p>Here is the link to your event. Keep it secret, keep it safe; it's the only way to access the event:</p>
+
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" value="@TempData["EventLink"]" readonly>
+    </div>
+
+    <form method="get" action="/UserSelect">
+        <input type="hidden" name="eventId" value="@TempData["EventId"]" />
+        <button type="submit" class="btn btn-primary">Proceed to Event</button>
+    </form>
+</div>

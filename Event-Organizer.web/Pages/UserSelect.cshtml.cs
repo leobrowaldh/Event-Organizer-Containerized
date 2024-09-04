@@ -9,23 +9,19 @@ namespace Event_Organizer.web.Pages
     public class UserSelectModel(IDataAccess injectedDataAccess) : PageModel
     {
 		private readonly IDataAccess _dataAccess = injectedDataAccess;
-		public ICollection<User>? Users { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public Guid EventId { get; set; }
+        public ICollection<User>? Users { get; set; }
         [BindProperty]
         public string? NewUser { get; set; }
         public void OnGet()
         {
-			//Users = _dataAccess.GetEventUsers(1);
+            var eventId = EventId;
+            //Users = _dataAccess.GetEventUsers(1);
         }
-		public IActionResult OnPost()
+		public void OnPost()
 		{
-			if (NewUser is not null)
-			{
-				return RedirectToPage("/Event");
-			}
-			else
-			{
-				return Page(); //to original page
-			}
+			//post new user, make sure it appears on the list (refresh)
 		}
 	}
 }
