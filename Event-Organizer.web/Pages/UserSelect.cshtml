@@ -4,33 +4,40 @@
 @{
 }
 
-<div class="text-center">
-	<form method="POST">
-		<div>
-			<input asp-for="NewUser"
-				   placeholder="Input Name" />
-		</div>
-		<input type="submit" />
-	</form>
-</div>
+<div class="container mt-4">
+    <div class="row">
+        <!-- Table on the left -->
+        <div class="col-md-6">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Who are you?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Users is not null)
+                    {
+                        @foreach (User user in Model.Users)
+                        {
+                            <tr>
+                                <td>@user.Name</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
 
-<div class="row">
-	<table class="table">
-		<thead class="thead-inverse">
-			<tr>
-				<th>User Name</th>
-			</tr>
-		</thead>
-		<tbody>
-			@if (Model.Users is not null)
-			{
-				@foreach (User user in Model.Users)
-				{
-					<tr>
-						<td>@user.Name</td>
-					</tr>
-				}
-			}
-		</tbody>
-	</table>
+        <!-- Form on the right -->
+        <div class="col-md-6 d-flex flex-column align-items-center">
+            <!-- Text above the form -->
+            <p class="mb-2">...Not in the list?</p>
+            <form method="POST" class="w-75">
+                <div class="form-group">
+                    <input asp-for="NewUser" class="form-control" placeholder="Enter your name" />
+                </div>
+                <button type="submit" class="btn btn-primary mt-2 w-100">Submit</button>
+            </form>
+        </div>
+    </div>
 </div>
