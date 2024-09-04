@@ -5,11 +5,10 @@
 }
 
 <div class="text-center">
-	<form method="POST">
-		<div>
-			<input asp-for="EventName"
-				   placeholder="Name your event now!!!" />
-		</div>
-		<input type="submit" />
-	</form>
+    <form method="POST" class="bg-white p-4 rounded shadow" style="max-width: 400px; margin: auto;">
+        <div class="mb-3">
+            <input asp-for="EventName" class="form-control" placeholder="Name your event" />
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Submit</button>
+    </form>
 </div>

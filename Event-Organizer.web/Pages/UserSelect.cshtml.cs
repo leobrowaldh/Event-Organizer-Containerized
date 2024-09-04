@@ -1,23 +1,19 @@
+using Event_Organizer.web.DataAccess;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Event_Organizer.web.Pages
 {
 
-    public class User //mock
+    public class UserSelectModel(IDataAccess injectedDataAccess) : PageModel
     {
-        public string Name { get; set; }
-    }
-
-    public class UserSelectModel : PageModel
-    {
-        public IList<User>? Users { get; set; }
+		private readonly IDataAccess _dataAccess = injectedDataAccess;
+		public ICollection<User>? Users { get; set; }
         [BindProperty]
         public string? NewUser { get; set; }
         public void OnGet()
         {
-			Users = [new User() { Name = "Ahmed"}, new User() { Name = "Olle" }, new User() { Name = "Pepe" },
-			new User() { Name = "Tobias"}, new User() { Name = "Yasmine"}, new User() { Name = "Martin"}];
+			Users = _dataAccess.GetEventUsers(0);
         }
 		public IActionResult OnPost()
 		{

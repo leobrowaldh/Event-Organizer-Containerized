@@ -1,3 +1,5 @@
+using Event_Organizer.web.DataAccess;
+
 using Data.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -5,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+//Add Data access injection:
+builder.Services.AddScoped<IDataAccess, DataAccess>();
 
 //SQL Server Service Registration
 builder.Services.AddDbContext<EventOrganizerDbContext>(
