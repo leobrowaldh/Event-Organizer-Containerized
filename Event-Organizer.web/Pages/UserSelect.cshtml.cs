@@ -14,7 +14,7 @@ namespace Event_Organizer.web.Pages
         public string? NewUser { get; set; }
         public void OnGet()
         {
-			Users = _dataAccess.GetEventUsers(0);
+			//Users = _dataAccess.GetEventUsers(1);
         }
 		public IActionResult OnPost()
 		{

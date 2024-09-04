@@ -14,7 +14,7 @@ namespace Data.Models
 
         // Foreign Key
         [ForeignKey("Event")]
-        public int EventId { get; set; }
+        public Guid EventId { get; set; }
 
         // Navigation properties
         public Event? Event { get; set; }

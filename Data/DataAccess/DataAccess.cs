@@ -6,11 +6,11 @@ namespace Data.DataAccess
     public class DataAccess(EventOrganizerDbContext injectedContext) : IDataAccess
     {
         private readonly EventOrganizerDbContext _db = injectedContext;
-        public Event? GetEvent(int eventId) => _db.Events.Find(eventId);
+        public Event? GetEvent(Guid eventId) => _db.Events.Find(eventId);
 
-        public ICollection<Activity> GetEventActivities(int eventId) => _db.Activities.Where(a => a.EventId == eventId).ToList();
+        public ICollection<Activity> GetEventActivities(Guid eventId) => _db.Activities.Where(a => a.EventId == eventId).ToList();
 
-        public ICollection<User> GetEventUsers(int eventId) => _db.Users.Where(u => u.EventId == eventId).ToList();
+        public ICollection<User> GetEventUsers(Guid eventId) => _db.Users.Where(u => u.EventId == eventId).ToList();
 
         public User? GetUser(int userId) => _db.Users.Find(userId);
 

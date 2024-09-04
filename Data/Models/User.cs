@@ -15,7 +15,7 @@ namespace Data.Models
 
         // Foreign Keys
         [ForeignKey("Event")]
-        public int EventId { get; set; }
+        public Guid EventId { get; set; }
 
         [ForeignKey("Activity")]
         public int ActivityId { get; set; }
