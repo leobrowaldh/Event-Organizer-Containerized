@@ -5,6 +5,8 @@ VisualStudioVersion = 17.11.35219.272
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Event-Organizer.web", "Event-Organizer.web\Event-Organizer.web.csproj", "{51D2D832-49A0-4F5E-93B3-70EF2A0D092E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{EEE2F523-7492-47F3-874C-F1100E3AD211}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{51D2D832-49A0-4F5E-93B3-70EF2A0D092E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51D2D832-49A0-4F5E-93B3-70EF2A0D092E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51D2D832-49A0-4F5E-93B3-70EF2A0D092E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEE2F523-7492-47F3-874C-F1100E3AD211}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEE2F523-7492-47F3-874C-F1100E3AD211}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEE2F523-7492-47F3-874C-F1100E3AD211}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEE2F523-7492-47F3-874C-F1100E3AD211}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
