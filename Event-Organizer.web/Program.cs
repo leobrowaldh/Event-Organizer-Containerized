@@ -1,7 +1,16 @@
+using Data.Context;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+//SQL Server Service Registration
+builder.Services.AddDbContext<EventOrganizerDbContext>(
+    options =>
+        options.UseSqlServer(
+            builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
