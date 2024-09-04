@@ -361,3 +361,11 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Event-Organizer.web/bin/Debug/net8.0/appsettings.Development.json
+/Event-Organizer.web/bin/Debug/net8.0/appsettings.json
+/Event-Organizer.web/bin/Debug/net8.0/Event-Organizer.web.deps.json
+/Event-Organizer.web/bin/Debug/net8.0/Event-Organizer.web.dll
+/Event-Organizer.web/bin/Debug/net8.0/Event-Organizer.web.exe
+/Event-Organizer.web/bin/Debug/net8.0/Event-Organizer.web.pdb
+/Event-Organizer.web/bin/Debug/net8.0/Event-Organizer.web.runtimeconfig.json
+/Event-Organizer.web/bin/Debug/net8.0/Event-Organizer.web.staticwebassets.runtime.json
