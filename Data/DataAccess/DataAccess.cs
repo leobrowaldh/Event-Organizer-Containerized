@@ -21,7 +21,10 @@ namespace Data.DataAccess
 
         public bool PostEvent(Event ev)
         {
-            throw new NotImplementedException();
+            //save event to db
+            _db.Events.Add(ev);
+            _db.SaveChanges();
+            return true;
         }
 
         public bool PostUser(User user)
