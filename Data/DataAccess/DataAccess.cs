@@ -16,8 +16,12 @@ namespace Data.DataAccess
 
         public bool PostActivity(Activity activity)
         {
-            throw new NotImplementedException();
+            // save activity to db
+            _db.Activities.Add(activity);
+            _db.SaveChanges();
+            return true;
         }
+
 
         public bool PostEvent(Event ev)
         {
@@ -29,7 +33,11 @@ namespace Data.DataAccess
 
         public bool PostUser(User user)
         {
-            throw new NotImplementedException();
+            // save user to db
+            _db.Users.Add(user);
+            _db.SaveChanges();
+            return true;
         }
+
     }
 }
