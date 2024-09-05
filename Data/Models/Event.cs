@@ -11,7 +11,7 @@ namespace Data.Models
         [Required]
         public string? Name { get; set; }
 
-        public bool OpenForEditing { get; set; }
+        public bool OpenForEditing { get; set; } = true;
 
         // Navigation properties
         public ICollection<Activity> Activities { get; set; } = new List<Activity>();

@@ -17,6 +17,15 @@
 	<h4>@((Model.ActiveEvent != null) ? (Model.ActiveEvent.OpenForEditing ? "Feel free to add some activities" : "Time to vote") : "No Event Found")</h4>
 </div>
 
+<div class="container-fluid mt-4">
+	<form method="post">
+		<div class="input-group mb-3">
+			<input asp-for="ActivityName" class="form-control" placeholder="Name your activity" />
+			<button class="btn btn-success" type="submit">Add Activity</button>
+		</div>
+	</form>
+</div>
+
 <div class="row">
 	@if (Model.Activities is not null)
 	{
