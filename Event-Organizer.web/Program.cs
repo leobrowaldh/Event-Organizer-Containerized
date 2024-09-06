@@ -15,6 +15,14 @@ builder.Services.AddDbContext<EventOrganizerDbContext>(
         options.UseSqlServer(
             builder.Configuration.GetConnectionString("AzureConnection")));
 
+// Add session support
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Set the session timeout
+    options.Cookie.HttpOnly = true; // Make the cookie accessible only to the server
+    options.Cookie.IsEssential = true; // Ensure the session cookie is essential
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -29,6 +37,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseSession(); // Must be added before app.UseAuthorization()
 
 app.UseAuthorization();
 

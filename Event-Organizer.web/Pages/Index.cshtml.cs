@@ -37,7 +37,7 @@ namespace Event_Organizer.web.Pages
                 var request = HttpContext.Request;
                 string scheme = request.Scheme; // "http" or "https"
                 string host = request.Host.Value; // "localhost:5000" or "www.yoursite.com"
-                string path = Url.Page("/UserSelect", new { eventId = newEvent.Id }); // Build URL path
+                string path = Url.Page("/Event", new { eventId = newEvent.Id }); // Build URL path
 
                 // Combine to create the full URL
                 string FullEventLink = $"{scheme}://{host}{path}";

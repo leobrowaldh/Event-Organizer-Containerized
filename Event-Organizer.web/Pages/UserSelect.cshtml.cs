@@ -2,6 +2,8 @@ using Data.DataAccess;
 using Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Http;
+using System;
 
 namespace Event_Organizer.web.Pages
 {
@@ -36,8 +38,18 @@ namespace Event_Organizer.web.Pages
             // Call the PostUser method of the IDataAccess interface to add the userToAdd object to the data source
             _dataAccess.PostUser(userToAdd);
 
+            // Store the userId in session after adding the user
+            HttpContext.Session.SetInt32("UserId", userToAdd.Id);
+
             // Redirect to the UserSelect page with the eventId parameter
             return RedirectToPage("/UserSelect", new { eventId = EventId });
+        }
+
+        // Helper method to get the current user's ID from session
+        public int? GetCurrentUserId()
+        {
+            // Retrieve userId from session
+            return HttpContext.Session.GetInt32("UserId");
         }
     }
 }
