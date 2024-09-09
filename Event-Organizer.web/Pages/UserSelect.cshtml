@@ -7,33 +7,7 @@
 
 <div class="container mt-5">
     <div class="row">
-        <!-- Table on the left -->
-        <div class="col-md-6">
-            <div class="bg-white p-0 rounded shadow">
-                <table class="table table-striped mb-0">
-                    <thead>
-                        <tr>
-                            <th class="bg-primary text-white">Who are you?</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model.Users is not null)
-
-                        {
-                            @foreach (User user in Model.Users)
-
-                            {
-                                <tr>
-									<td><a asp-page="Event" asp-route-eventId="@Model.EventId">@user.Name</a></td>
-                                </tr>
-                            }
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Form on the right -->
+        <!-- Form on the left -->
         <div class="col-md-6 d-flex flex-column align-items-center">
             <p class="bg-primary text-white p-2 rounded mb-2 w-75 text-center">...Not in the list?</p>
             <form method="POST" class="w-75 bg-white p-4 rounded shadow">
@@ -42,6 +16,37 @@
                 </div>
                 <button type="submit" class="btn btn-primary mt-2 w-100">Submit</button>
             </form>
+        </div>
+
+        <!-- Table on the right -->
+        <div class="col-md-6">
+            <div class="bg-white p-0 rounded shadow">
+                <table class="table table-striped mb-0">
+                    <thead>
+                        <tr>
+                            <th class="bg-primary text-white">Event participants</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Users != null && Model.Users.Any())
+                        {
+                            @foreach (User user in Model.Users)
+                            {
+                                <tr>
+                                    <td><a asp-page="Event" asp-route-eventId="@Model.EventId">@user.Name</a></td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="1" class="text-center">Oh so empty...</td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
         </div>
     </div>
 </div>
