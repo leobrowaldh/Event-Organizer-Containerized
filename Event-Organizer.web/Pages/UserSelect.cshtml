@@ -36,6 +36,14 @@
                                     <td><a asp-page="Event" asp-route-eventId="@Model.EventId">@user.Name</a></td>
                                 </tr>
                             }
+                            <!-- Add a button that redirects to the Event page -->
+                            <tr>
+                                <td colspan="1" class="text-center">
+                                    <a asp-page="Event" asp-route-eventId="@Model.EventId" type="submit" class="btn btn-primary mt-2">
+                                        Go to Event
+                                    </a>
+                                </td>
+                            </tr>
                         }
                         else
                         {
@@ -44,6 +52,8 @@
                             </tr>
                         }
                     </tbody>
+
+
 
                 </table>
             </div>
