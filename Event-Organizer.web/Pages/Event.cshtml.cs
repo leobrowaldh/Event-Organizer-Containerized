@@ -38,7 +38,6 @@ namespace Event_Organizer.web.Pages
         public Event? ActiveEvent { get; set; }
 
         public ICollection<Activity> Activities { get; set; } = [];
-        public User? CurrentUser { get; set; }
 
         // Get the current user's ID from the session
         public User? CurrentUser { get; set; }
@@ -133,7 +132,6 @@ namespace Event_Organizer.web.Pages
             return RedirectToPage("/Event", new { eventId = eventId });
         }
 
-    }
         public IActionResult OnPostVote(int activityId)
         {
 			ActiveEvent = _dataAccess.GetEvent(EventId);

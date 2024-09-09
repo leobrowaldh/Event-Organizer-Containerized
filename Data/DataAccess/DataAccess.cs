@@ -47,7 +47,7 @@ namespace Data.DataAccess
 			_db.Users.Update(user);
             _db.SaveChanges();
 		}
-	}
+	
 		public bool UpdateActivity(Activity activity)
 		{
 			// Update activity in db
