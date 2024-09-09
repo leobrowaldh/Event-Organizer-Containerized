@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Http;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Event_Organizer.web.Pages
 {
@@ -15,6 +16,8 @@ namespace Event_Organizer.web.Pages
         public Guid EventId { get; set; }
         public ICollection<User>? Users { get; set; }
         [BindProperty]
+        [Required(ErrorMessage = "You must enter a name.")]
+        [MinLength(1, ErrorMessage = "Name must have at least one character.")]
         public string? NewUser { get; set; }
         public void OnGet()
         {
@@ -23,6 +26,16 @@ namespace Event_Organizer.web.Pages
         }
         public IActionResult OnPost()
         {
+            // Always reload the list of users so they appear after a post request
+            Users = _dataAccess.GetEventUsers(EventId);
+
+            // Check if the form input is valid
+            if (!ModelState.IsValid)
+            {
+                // If validation fails, return the page with error messages and the updated user list
+                return Page();
+            }
+
             // Create a new User object and set the Name property to the value of NewUser
             User userToAdd = new User() { Name = NewUser };
 
@@ -44,6 +57,8 @@ namespace Event_Organizer.web.Pages
             // Redirect to the UserSelect page with the eventId parameter
             return RedirectToPage("/UserSelect", new { eventId = EventId });
         }
+
+
 
         // Helper method to get the current user's ID from session
         public int? GetCurrentUserId()
