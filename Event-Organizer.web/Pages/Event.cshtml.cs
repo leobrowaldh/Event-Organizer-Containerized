@@ -37,7 +37,7 @@ namespace Event_Organizer.web.Pages
 
         public Event? ActiveEvent { get; set; }
 
-        public ICollection<Activity> Activities { get; set; } = new List<Activity>();
+        public ICollection<Activity> Activities { get; set; } = [];
 
         // Get the current user's ID from the session
         public User? CurrentUser { get; set; }
@@ -62,8 +62,9 @@ namespace Event_Organizer.web.Pages
             return Page();
         }
 
-        public IActionResult OnPost()
+		public IActionResult OnPostAddActivity()
         {
+            ActiveEvent = _dataAccess.GetEvent(EventId);
             // Ensure the user is set in the session
             if (CurrentUserId == null)
             {
@@ -71,7 +72,6 @@ namespace Event_Organizer.web.Pages
                 return RedirectToPage("/UserSelect", new { eventId = EventId });
             }
 
-            ActiveEvent = _dataAccess.GetEvent(EventId);
             if (ActiveEvent != null && !string.IsNullOrEmpty(ActivityName))
             {
                 // Create and add the new activity to the event
@@ -88,34 +88,7 @@ namespace Event_Organizer.web.Pages
             return RedirectToPage("/Event", new { eventId = EventId });
         }
 
-        // Handle adding a new activity with default values
-        public IActionResult OnPostAddNewActivity()
-        {
-            if (CurrentUserId == null)
-            {
-                return RedirectToPage("/UserSelect", new { eventId = EventId });
-            }
-
-            // Create a new activity with default values
-            Activity newActivity = new Activity()
-            {
-                Name = "New Activity",
-                Description = "Describe the activity...",
-                EventId = EventId // Use the existing EventId
-            };
-
-            _dataAccess.PostActivity(newActivity);
-
-            // Return the new activity data as JSON
-            return new JsonResult(new
-            {
-                id = newActivity.Id,
-                name = newActivity.Name,
-                description = newActivity.Description,
-                eventId = newActivity.EventId
-            });
-        }
-
+        
         // Handle activity edits
         public IActionResult OnPostEditActivity()
         {
@@ -159,5 +132,26 @@ namespace Event_Organizer.web.Pages
             return RedirectToPage("/Event", new { eventId = eventId });
         }
 
-    }
+        public IActionResult OnPostVote(int activityId)
+        {
+			ActiveEvent = _dataAccess.GetEvent(EventId);
+			if (CurrentUserId == null)
+            {
+                return RedirectToPage("/UserSelect", new { eventId = EventId });
+            }
+            else
+            {
+                User? votingUser = _dataAccess.GetUser((int)CurrentUserId);
+                Activity? votedActivity = _dataAccess.GetActivity(activityId);
+                if (votedActivity != null && votingUser != null)
+                {
+                    votingUser.Activity = votedActivity;
+                    _dataAccess.PutUser(votingUser);
+                }
+            }
+
+			return RedirectToPage("/Event", new { eventId = EventId });
+		}
+
+	}
 }
