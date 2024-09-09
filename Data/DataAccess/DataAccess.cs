@@ -39,5 +39,22 @@ namespace Data.DataAccess
             return true;
         }
 
+		public bool UpdateActivity(Activity activity)
+		{
+			// Update activity in db
+			_db.Activities.Update(activity);
+			_db.SaveChanges();
+			return true;
+		}
+
+        public bool DeleteActivity(Activity activity)
+        {
+            // Remove activity from db
+            _db.Activities.Remove(activity);
+            _db.SaveChanges();
+            return true;
+        }
+
+
     }
 }
