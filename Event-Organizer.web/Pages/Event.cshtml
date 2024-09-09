@@ -6,16 +6,27 @@
 	 ViewData["Title"] = (Model.ActiveEvent != null)? Model.ActiveEvent.Name:"No Event Found";
 }
 
-<nav class="navbar bg-body-tertiaryc mb-4">
+<!-- Navbar -->
+<nav class="navbar bg-body-tertiary mb-4">
 	<div class="container-fluid d-flex justify-content-center">
-		<h1>@((Model.ActiveEvent != null)? Model.ActiveEvent.Name:"No Event Found")</h1>
+		<h1 class="text-dark bg-light p-3 rounded">@((Model.ActiveEvent != null) ? Model.ActiveEvent.Name : "No Event Found")</h1>
 	</div>
 </nav>
 
+<!-- Content Section -->
 <div class="container-fluid mb-4">
-	<h2 class="display-5">@* Hello @Model.CurrentUser.Name ! *@</h2>
-	<h4>@((Model.ActiveEvent != null) ? (Model.ActiveEvent.OpenForEditing ? "Feel free to add some activities" : "Time to vote") : "No Event Found")</h4>
+	@* <h2 class="display-5 text-dark bg-light p-3 rounded">Hello @Model.CurrentUser.Name !</h2> *@
+	<h4 class="text-dark bg-light p-3 rounded">
+		@((Model.ActiveEvent != null)
+				? (Model.ActiveEvent.OpenForEditing
+				? "Feel free to add some activities"
+				: "Time to vote")
+				: "No Event Found")
+	</h4>
 </div>
+
+
+
 
 <div class="container-fluid mt-4">
 	<form method="post">
