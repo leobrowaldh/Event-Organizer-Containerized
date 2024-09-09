@@ -7,16 +7,6 @@
 
 <div class="container mt-5">
     <div class="row">
-        <!-- Form on the left -->
-        <div class="col-md-6 d-flex flex-column align-items-center">
-            <p class="bg-primary text-white p-2 rounded mb-2 w-75 text-center">...Not in the list?</p>
-            <form method="POST" class="w-75 bg-white p-4 rounded shadow">
-                <div class="form-group">
-                    <input asp-for="NewUser" class="form-control" placeholder="Enter your name" />
-                </div>
-                <button type="submit" class="btn btn-primary mt-2 w-100">Submit</button>
-            </form>
-        </div>
 
         <!-- Table on the right -->
         <div class="col-md-6">
@@ -36,14 +26,7 @@
                                     <td><a asp-page="Event" asp-route-eventId="@Model.EventId">@user.Name</a></td>
                                 </tr>
                             }
-                            <!-- Add a button that redirects to the Event page -->
-                            <tr>
-                                <td colspan="1" class="text-center">
-                                    <a asp-page="Event" asp-route-eventId="@Model.EventId" type="submit" class="btn btn-primary mt-2 w-100">
-                                        Go to Event
-                                    </a>
-                                </td>
-                            </tr>
+
                         }
                         else
                         {
@@ -53,10 +36,28 @@
                         }
                     </tbody>
 
-
-
                 </table>
+                    @if (Model.Users != null && Model.Users.Any())
+                    {
+                        <!-- Additional Text Box -->
+                        <div class="custom-text-box">
+                            <p>
+                                Click your name to proceed to your event page
+                            </p>
+                        </div>
+                    }
             </div>
         </div>
+        <!-- Form on the left -->
+        <div class="col-md-6 d-flex flex-column align-items-center">
+            <p class="bg-primary text-white p-2 rounded mb-2 w-75 text-center">...Not in the list?</p>
+            <form method="POST" class="w-75 bg-white p-4 rounded shadow">
+                <div class="form-group">
+                    <input asp-for="NewUser" class="form-control" placeholder="Enter your name" />
+                </div>
+                <button type="submit" class="btn btn-primary mt-2 w-100">Submit</button>
+            </form>
+        </div>
+
     </div>
 </div>
