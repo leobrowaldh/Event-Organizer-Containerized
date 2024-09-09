@@ -14,4 +14,9 @@ namespace Data.DataAccess
         public bool PostUser(User user);
 		public void PutUser(User user);
 	}
+        public bool UpdateActivity(Activity activity);
+        public bool DeleteActivity(Activity activity);
+
+
+    }
 }

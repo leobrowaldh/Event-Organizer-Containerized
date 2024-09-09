@@ -6,31 +6,53 @@ using Microsoft.Extensions.Logging;
 
 namespace Event_Organizer.web.Pages
 {
-    public class EventModel(IDataAccess injectedDataAccess) : PageModel
+    public class EventModel : PageModel
     {
-        private readonly IDataAccess _dataAccess = injectedDataAccess;
+        public ICollection<User>? Users { get; set; }
+
+        private readonly IDataAccess _dataAccess;
+
+        public EventModel(IDataAccess injectedDataAccess)
+        {
+            _dataAccess = injectedDataAccess;
+        }
 
         [BindProperty(SupportsGet = true)]
         public Guid EventId { get; set; }
 
-		[BindProperty(SupportsGet = true)]
-		public string ActivityName { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string ActivityName { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string Description { get; set; }
+
+        [BindProperty]
+        public string UpdatedActivityName { get; set; }
+
+        [BindProperty]
+        public string UpdatedDescription { get; set; }
+
+        [BindProperty]
+        public int ActivityId { get; set; }
 
         public Event? ActiveEvent { get; set; }
 
         public ICollection<Activity> Activities { get; set; } = [];
         public User? CurrentUser { get; set; }
 
-		// Get the current user's ID from the session
+        // Get the current user's ID from the session
+        public User? CurrentUser { get; set; }
         public int? CurrentUserId => HttpContext.Session.GetInt32("UserId");
 
         public IActionResult OnGet()
         {
-			ActiveEvent = _dataAccess.GetEvent(EventId);
+            Users = _dataAccess.GetEventUsers(EventId);
+            ActiveEvent = _dataAccess.GetEvent(EventId);
 			Activities = _dataAccess.GetEventActivities(EventId);
-            if (CurrentUserId != null)
+
+            if (CurrentUserId.HasValue)
             {
-                CurrentUser = _dataAccess.GetUser((int)CurrentUserId);
+                CurrentUser = _dataAccess.GetUser(CurrentUserId.Value);
             }
 
             if (CurrentUserId == null)
@@ -57,7 +79,8 @@ namespace Event_Organizer.web.Pages
                 Activity newActivity = new Activity()
                 {
                     Name = ActivityName,
-                    Event = ActiveEvent
+                    EventId = EventId, // Set the EventId directly
+                    Description = Description
                 };
 
                 _dataAccess.PostActivity(newActivity);
@@ -66,6 +89,51 @@ namespace Event_Organizer.web.Pages
             return RedirectToPage("/Event", new { eventId = EventId });
         }
 
+        
+        // Handle activity edits
+        public IActionResult OnPostEditActivity()
+        {
+            if (CurrentUserId == null)
+            {
+                return RedirectToPage("/UserSelect", new { eventId = EventId });
+            }
+
+            // Fetch the activity to edit using the integer ActivityId
+            var activity = _dataAccess.GetEventActivities(EventId)
+                                      .FirstOrDefault(a => a.Id == ActivityId);
+
+            if (activity != null)
+            {
+                // Update the activity fields with the new values
+                activity.Name = UpdatedActivityName;
+                activity.Description = UpdatedDescription;
+
+                _dataAccess.UpdateActivity(activity);
+            }
+
+            return RedirectToPage("/Event", new { eventId = EventId });
+        }
+
+        // Handle activity deletion
+        public IActionResult OnPostDeleteActivity(Guid eventId, int activityId)
+        {
+            if (CurrentUserId == null)
+            {
+                return RedirectToPage("/UserSelect", new { eventId = EventId });
+            }
+
+            var activity = _dataAccess.GetEventActivities(eventId)
+                                      .FirstOrDefault(a => a.Id == activityId);
+
+            if (activity != null)
+            {
+                _dataAccess.DeleteActivity(activity);
+            }
+
+            return RedirectToPage("/Event", new { eventId = eventId });
+        }
+
+    }
         public IActionResult OnPostVote(int activityId)
         {
 			ActiveEvent = _dataAccess.GetEvent(EventId);

@@ -3,14 +3,18 @@
 @using Data.Models
 @model Event_Organizer.web.Pages.EventModel
 @{
-	 ViewData["Title"] = (Model.ActiveEvent != null)? Model.ActiveEvent.Name:"No Event Found";
+    var userName = Model.CurrentUser != null ? Model.CurrentUser.Name : "User";
+    var eventName = Model.ActiveEvent != null ? Model.ActiveEvent.Name : "No Event Found";
+    ViewData["Title"] = $"Welcome {userName} to {eventName}";
 }
 
+
 <nav class="navbar bg-body-tertiaryc mb-4">
-	<div class="container-fluid d-flex justify-content-center">
-		<h1>@((Model.ActiveEvent != null)? Model.ActiveEvent.Name:"No Event Found")</h1>
-	</div>
+    <div class="container-fluid d-flex justify-content-center">
+        <h1 class="text-dark bg-light p-3 rounded">@($"Welcome {Model.CurrentUser?.Name ?? "User"} to {Model.ActiveEvent?.Name ?? "No Event Found"}")</h1>
+    </div>
 </nav>
+
 
 <div class="container-fluid mb-4">
 	<h2 class="display-5"> Hello @(Model.CurrentUser.Name !)</h2>
@@ -18,39 +22,113 @@
 </div>
 
 <div class="container-fluid mt-4">
-	<form method="post" asp-page-handler="AddActivity">
-		<input type="hidden" name="EventId" value="@Model.EventId" />
-		<div class="input-group mb-3">
-			<input asp-for="ActivityName" class="form-control" placeholder="Name your activity" />
-			<button class="btn btn-success" type="submit">Add Activity</button>
-		</div>
-	</form>
+    <!-- Add Activity Form -->
+    <form method="post" asp-page-handler="AddActivity" id="addActivityForm">
+        <input type="hidden" name="EventId" value="@Model.EventId" />
+        <input type="hidden" name="ActivityName" value="New Activity" />
+        <input type="hidden" name="Description" value="Describe the activity..." />
+
+        <button type="submit" class="btn btn-success">Add Activity</button>
+    </form>
 </div>
 
-<div class="row">
-	@if (Model.Activities is not null)
-	{
-		@foreach (Activity activity in Model.Activities)
-		{
-			<div class="col-sm-6 mb-3 mb-sm-0">
-				<div class="card">
-					<div class="card-body">
-						@* If this is the Activity the User voted for display a voting symbol in users color *@
-						@if (activity == Model.CurrentUser.Activity)
-						{
-							<span class="badge bg-danger text-white">@Model.CurrentUser.Name</span>
-						}
-						<h5 class="card-title">@activity.Name</h5>
-						<p class="card-text">@activity.Description</p>
-						<form method="post" asp-page-handler="Vote">
-							<input type="hidden" name="EventId" value="@Model.EventId" />
-							<input type="hidden" name="activityId" value="@activity.Id" />
-							<button type="submit" class="btn btn-primary">VOTE</button> @* It would be nice if this button had the users color *@
-						</form>
-					</div>
-				</div>
-			</div>
-		}
-	}
+<div class="row" id="activity-list">
+    @if (Model.Activities != null)
+    {
+        @foreach (var activity in Model.Activities)
+        {
+            <div class="col-sm-6 mb-3 mb-sm-0 activity-card" id="activity-@activity.Id">
+                <div class="card">
+                    <div class="card-body">
+                        @* If this is the Activity the User voted for display a voting symbol in users color *@
+                        @if (activity == Model.CurrentUser.Activity)
+                        {
+				                        <span class="badge bg-danger text-white">@Model.CurrentUser.Name</span>
+                        }
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <!-- Display-only fields (shown by default) -->
+                            <div id="viewMode-@activity.Id">
+                                <h5 class="card-title">@activity.Name</h5>
+                                <p class="card-text">@activity.Description</p>
+                            </div>
+
+                            <!-- Editable form fields (hidden by default) -->
+                            <form method="post" asp-page-handler="EditActivity" id="editForm-@activity.Id" style="display:none;">
+                                <input type="hidden" name="ActivityId" value="@activity.Id" />
+                                <input type="hidden" name="EventId" value="@Model.ActiveEvent.Id" />
+
+                                <div class="mb-3">
+                                    <label for="UpdatedActivityName" class="form-label">Activity Name:</label>
+                                    <input class="form-control" name="UpdatedActivityName" value="@activity.Name" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="UpdatedDescription" class="form-label">Description:</label>
+                                    <input class="form-control" name="UpdatedDescription" value="@activity.Description" />
+                                </div>
+
+                                <button type="submit" class="btn btn-success">Save Changes</button>
+                                <button type="button" class="btn btn-secondary" onclick="toggleEditMode('@activity.Id')">Cancel</button>
+                            </form>
+
+                            <!-- Edit Button -->
+                            <button type="button" class="btn btn-link" onclick="toggleEditMode('@activity.Id')">
+                                <i class="fas fa-cog"></i> <!-- Font Awesome cogwheel icon -->
+                            </button>
+
+                            <!-- Delete Button -->
+                            <form method="post" asp-page-handler="DeleteActivity" style="display:inline;">
+                                <input type="hidden" name="ActivityId" value="@activity.Id" />
+                                <input type="hidden" name="EventId" value="@Model.ActiveEvent.Id" />
+
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                            <!-- Voting Button -->
+                            <form method="post" asp-page-handler="Vote">
+				                <input type="hidden" name="EventId" value="@Model.EventId" />
+				                <input type="hidden" name="activityId" value="@activity.Id" />
+				                <button type="submit" class="btn btn-primary">VOTE</button> @* It would be nice if this button had the users color *@
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
 </div>
 
+<script>
+    // JavaScript function to toggle between view mode and edit mode
+    function toggleEditMode(activityId) {
+        const viewMode = document.getElementById(`viewMode-${activityId}`);
+        const editForm = document.getElementById(`editForm-${activityId}`);
+
+        if (viewMode.style.display === "none") {
+            viewMode.style.display = "block";
+            editForm.style.display = "none";
+        } else {
+            viewMode.style.display = "none";
+            editForm.style.display = "block";
+        }
+    }
+</script>
+<!-- Participants List -->
+ <div class="container-fluid mt-4">
+    @if (Model.Users != null && Model.Users.Any())
+    {
+        <h4 class="text-dark bg-light p-3 rounded">Participants</h4>
+        <ul class="list-group">
+            @foreach (User participant in Model.Users)
+            {
+                <li class="list-group-item">
+                    @participant.Name
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p class="text-dark bg-light p-3 rounded">No participants found</p>
+    }
+</div> 
