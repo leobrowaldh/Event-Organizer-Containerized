@@ -8,6 +8,8 @@ namespace Event_Organizer.web.Pages
 {
     public class EventModel(IDataAccess injectedDataAccess) : PageModel
     {
+        public ICollection<User>? Users { get; set; }
+
         private readonly IDataAccess _dataAccess = injectedDataAccess;
 
         [BindProperty(SupportsGet = true)]
@@ -25,7 +27,8 @@ namespace Event_Organizer.web.Pages
 
         public IActionResult OnGet()
         {
-			ActiveEvent = _dataAccess.GetEvent(EventId);
+            Users = _dataAccess.GetEventUsers(EventId);
+            ActiveEvent = _dataAccess.GetEvent(EventId);
 			Activities = _dataAccess.GetEventActivities(EventId);
 
             if (CurrentUserId == null)

@@ -3,55 +3,72 @@
 @using Data.Models
 @model Event_Organizer.web.Pages.EventModel
 @{
-	 ViewData["Title"] = (Model.ActiveEvent != null)? Model.ActiveEvent.Name:"No Event Found";
+    ViewData["Title"] = (Model.ActiveEvent != null) ? Model.ActiveEvent.Name : "No Event Found";
 }
 
 <!-- Navbar -->
 <nav class="navbar bg-body-tertiary mb-4">
-	<div class="container-fluid d-flex justify-content-center">
-		<h1 class="text-dark bg-light p-3 rounded">@((Model.ActiveEvent != null) ? Model.ActiveEvent.Name : "No Event Found")</h1>
-	</div>
+    <div class="container-fluid d-flex justify-content-center">
+        <h1 class="text-dark bg-light p-3 rounded">@((Model.ActiveEvent != null) ? Model.ActiveEvent.Name : "No Event Found")</h1>
+    </div>
 </nav>
 
 <!-- Content Section -->
 <div class="container-fluid mb-4">
-	@* <h2 class="display-5 text-dark bg-light p-3 rounded">Hello @Model.CurrentUser.Name !</h2> *@
-	<h4 class="text-dark bg-light p-3 rounded">
-		@((Model.ActiveEvent != null)
-				? (Model.ActiveEvent.OpenForEditing
-				? "Feel free to add some activities"
-				: "Time to vote")
-				: "No Event Found")
-	</h4>
+    <h4 class="text-dark bg-light p-3 rounded">
+        @((Model.ActiveEvent != null)
+            ? (Model.ActiveEvent.OpenForEditing
+            ? "Feel free to add some activities"
+            : "Time to vote")
+            : "No Event Found")
+    </h4>
 </div>
 
-
-
-
+<!-- Form to Add Activity -->
 <div class="container-fluid mt-4">
-	<form method="post">
-		<div class="input-group mb-3">
-			<input asp-for="ActivityName" class="form-control" placeholder="Name your activity" />
-			<button class="btn btn-success" type="submit">Add Activity</button>
-		</div>
-	</form>
+    <form method="post">
+        <div class="input-group mb-3">
+            <input asp-for="ActivityName" class="form-control" placeholder="Name your activity" />
+            <button class="btn btn-success" type="submit">Add Activity</button>
+        </div>
+    </form>
 </div>
 
+<!-- Activities List -->
 <div class="row">
-	@if (Model.Activities is not null)
-	{
-		@foreach (Activity activity in Model.Activities)
-		{
-			<div class="col-sm-6 mb-3 mb-sm-0">
-				<div class="card">
-					<div class="card-body">
-						<h5 class="card-title">@activity.Name</h5>
-						<p class="card-text">@activity.Description</p>
-						<a href="#" class="btn btn-primary">VOTE</a>
-					</div>
-				</div>
-			</div>
-		}
-	}
+    @if (Model.Activities is not null)
+    {
+        @foreach (Activity activity in Model.Activities)
+        {
+            <div class="col-sm-6 mb-3 mb-sm-0">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@activity.Name</h5>
+                        <p class="card-text">@activity.Description</p>
+                        <a href="#" class="btn btn-primary">VOTE</a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
 </div>
 
+<!-- Participants List -->
+ <div class="container-fluid mt-4">
+    @if (Model.Users != null && Model.Users.Any())
+    {
+        <h4 class="text-dark bg-light p-3 rounded">Participants</h4>
+        <ul class="list-group">
+            @foreach (User participant in Model.Users)
+            {
+                <li class="list-group-item">
+                    @participant.Name
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p class="text-dark bg-light p-3 rounded">No participants found</p>
+    }
+</div> 
