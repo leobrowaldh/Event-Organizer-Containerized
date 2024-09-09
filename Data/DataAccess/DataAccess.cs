@@ -6,7 +6,10 @@ namespace Data.DataAccess
     public class DataAccess(EventOrganizerDbContext injectedContext) : IDataAccess
     {
         private readonly EventOrganizerDbContext _db = injectedContext;
-        public Event? GetEvent(Guid eventId) => _db.Events.Find(eventId);
+
+		public Activity? GetActivity(int activityId) => _db.Activities.Find(activityId);
+
+		public Event? GetEvent(Guid eventId) => _db.Events.Find(eventId);
 
         public ICollection<Activity> GetEventActivities(Guid eventId) => _db.Activities.Where(a => a.EventId == eventId).ToList();
 
@@ -39,5 +42,10 @@ namespace Data.DataAccess
             return true;
         }
 
-    }
+		public void PutUser(User user)
+		{
+			_db.Users.Update(user);
+            _db.SaveChanges();
+		}
+	}
 }

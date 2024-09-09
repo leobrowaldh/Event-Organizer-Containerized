@@ -19,6 +19,7 @@ namespace Event_Organizer.web.Pages
         public Event? ActiveEvent { get; set; }
 
         public ICollection<Activity> Activities { get; set; } = [];
+        public User? CurrentUser { get; set; }
 
 		// Get the current user's ID from the session
         public int? CurrentUserId => HttpContext.Session.GetInt32("UserId");
@@ -27,6 +28,10 @@ namespace Event_Organizer.web.Pages
         {
 			ActiveEvent = _dataAccess.GetEvent(EventId);
 			Activities = _dataAccess.GetEventActivities(EventId);
+            if (CurrentUserId != null)
+            {
+                CurrentUser = _dataAccess.GetUser((int)CurrentUserId);
+            }
 
             if (CurrentUserId == null)
             {
@@ -36,8 +41,9 @@ namespace Event_Organizer.web.Pages
             return Page();
         }
 
-		public IActionResult OnPost()
+		public IActionResult OnPostAddActivity()
         {
+            ActiveEvent = _dataAccess.GetEvent(EventId);
             // Ensure the user is set in the session
             if (CurrentUserId == null)
             {
@@ -45,7 +51,6 @@ namespace Event_Organizer.web.Pages
                 return RedirectToPage("/UserSelect", new { eventId = EventId });
             }
 
-            ActiveEvent = _dataAccess.GetEvent(EventId);
             if (ActiveEvent != null && !string.IsNullOrEmpty(ActivityName))
             {
                 // Create and add the new activity to the event
@@ -60,6 +65,27 @@ namespace Event_Organizer.web.Pages
 
             return RedirectToPage("/Event", new { eventId = EventId });
         }
+
+        public IActionResult OnPostVote(int activityId)
+        {
+			ActiveEvent = _dataAccess.GetEvent(EventId);
+			if (CurrentUserId == null)
+            {
+                return RedirectToPage("/UserSelect", new { eventId = EventId });
+            }
+            else
+            {
+                User? votingUser = _dataAccess.GetUser((int)CurrentUserId);
+                Activity? votedActivity = _dataAccess.GetActivity(activityId);
+                if (votedActivity != null && votingUser != null)
+                {
+                    votingUser.Activity = votedActivity;
+                    _dataAccess.PutUser(votingUser);
+                }
+            }
+
+			return RedirectToPage("/Event", new { eventId = EventId });
+		}
 
 	}
 }

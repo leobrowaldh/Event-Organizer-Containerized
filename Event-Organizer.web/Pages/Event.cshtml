@@ -13,12 +13,13 @@
 </nav>
 
 <div class="container-fluid mb-4">
-	<h2 class="display-5">@* Hello @Model.CurrentUser.Name ! *@</h2>
+	<h2 class="display-5"> Hello @(Model.CurrentUser.Name !)</h2>
 	<h4>@((Model.ActiveEvent != null) ? (Model.ActiveEvent.OpenForEditing ? "Feel free to add some activities" : "Time to vote") : "No Event Found")</h4>
 </div>
 
 <div class="container-fluid mt-4">
-	<form method="post">
+	<form method="post" asp-page-handler="AddActivity">
+		<input type="hidden" name="EventId" value="@Model.EventId" />
 		<div class="input-group mb-3">
 			<input asp-for="ActivityName" class="form-control" placeholder="Name your activity" />
 			<button class="btn btn-success" type="submit">Add Activity</button>
@@ -34,9 +35,18 @@
 			<div class="col-sm-6 mb-3 mb-sm-0">
 				<div class="card">
 					<div class="card-body">
+						@* If this is the Activity the User voted for display a voting symbol in users color *@
+						@if (activity == Model.CurrentUser.Activity)
+						{
+							<span class="badge bg-danger text-white">@Model.CurrentUser.Name</span>
+						}
 						<h5 class="card-title">@activity.Name</h5>
 						<p class="card-text">@activity.Description</p>
-						<a href="#" class="btn btn-primary">VOTE</a>
+						<form method="post" asp-page-handler="Vote">
+							<input type="hidden" name="EventId" value="@Model.EventId" />
+							<input type="hidden" name="activityId" value="@activity.Id" />
+							<button type="submit" class="btn btn-primary">VOTE</button> @* It would be nice if this button had the users color *@
+						</form>
 					</div>
 				</div>
 			</div>
