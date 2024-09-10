@@ -31,7 +31,8 @@ namespace Data.Context
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Activity)
                 .WithMany(a => a.Users)
-                .HasForeignKey(u => u.ActivityId);
+                .HasForeignKey(u => u.ActivityId)
+				.OnDelete(DeleteBehavior.SetNull);
 		}
 
 
