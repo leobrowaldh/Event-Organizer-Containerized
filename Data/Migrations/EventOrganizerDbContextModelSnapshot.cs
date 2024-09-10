@@ -43,7 +43,7 @@ namespace Data.Migrations
 
                     b.HasIndex("EventId");
 
-                    b.ToTable("Activities");
+                    b.ToTable("Activities", (string)null);
                 });
 
             modelBuilder.Entity("Data.Models.Event", b =>
@@ -61,7 +61,7 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Events");
+                    b.ToTable("Events", (string)null);
                 });
 
             modelBuilder.Entity("Data.Models.User", b =>
@@ -91,7 +91,7 @@ namespace Data.Migrations
 
                     b.HasIndex("EventId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Data.Models.Activity", b =>
@@ -109,13 +109,12 @@ namespace Data.Migrations
                 {
                     b.HasOne("Data.Models.Activity", "Activity")
                         .WithMany("Users")
-                        .HasForeignKey("ActivityId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ActivityId");
 
                     b.HasOne("Data.Models.Event", "Event")
                         .WithMany("Users")
                         .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Activity");

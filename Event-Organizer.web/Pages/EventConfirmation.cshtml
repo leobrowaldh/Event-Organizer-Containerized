@@ -6,14 +6,30 @@
 
 <div class="text-center bg-white p-4 rounded shadow" style="max-width: 500px; margin: auto; margin-top: 50px;">
     <h3>Event Created!</h3>
-    <p>Here is the link to your event. Keep it secret, keep it safe; it's the only way to access the event:</p>
+    <p>Here is the link to your event. Keep it secret, keep it safe; it's the only way to access the event.</p>
+    <p>Copy the url and send it to the people you wish will attend the event.</p>
+    <p></p>
 
-    <div class="input-group mb-3">
-        <input type="text" class="form-control" value="@TempData["EventLink"]" readonly>
+    <div class="mb-3">
+        <input id="eventLink" type="text" class="form-control" value="@TempData["EventLink"]" readonly>
+    </div>
+    <div style="margin-bottom: 5px;">
+        <button class="btn btn-primary" onclick="copyToClipboard()">Copy URL</button>
     </div>
 
     <form method="get" action="/UserSelect">
         <input type="hidden" name="eventId" value="@TempData["EventId"]" />
-        <button type="submit" class="btn btn-primary">Proceed to event list</button>
+        <button type="submit" class="btn btn-primary" style="margin-top: 1px;">Proceed to event list</button>
     </form>
 </div>
+
+    <script>
+        function copyToClipboard() {
+            var copyText = document.getElementById("eventLink");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);  // För mobila enheter
+            document.execCommand("copy");
+
+            alert("Länk kopierad till urklipp: " + copyText.value);
+        }
+    </script>

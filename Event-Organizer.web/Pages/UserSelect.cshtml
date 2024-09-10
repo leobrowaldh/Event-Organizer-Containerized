@@ -17,39 +17,38 @@
                             <th class="bg-primary text-white p-2 rounded mb-2 w-75 text-center">Event participants</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @if (Model.Users != null && Model.Users.Any())
-                        {
-                            @foreach (User user in Model.Users)
-                            {
-                                <tr>
-                                    <td>
-                                        <div style="display: flex; align-items: center;">
-                                            <a asp-page="Event" asp-route-eventId="@Model.EventId" class="badge text-white text-decoration-none" style="background-color: @user.VotingColor;">@user.Name</a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            }
-
-                        }
-                        else
-                        {
-                            <tr>
-                                <td colspan="1" class="text-center">Oh so empty...</td>
-                            </tr>
-                        }
-                    </tbody>
+<tbody>
+    @if (Model.Users != null && Model.Users.Any())
+    {
+        @foreach (User user in Model.Users)
+        {
+            <tr>
+                <td>
+                    <div style="display: flex; align-items: center;">
+                        <a asp-page="Event" asp-route-eventId="@Model.EventId" class="badge text-white text-decoration-none" style="background-color: @user.VotingColor;">@user.Name</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <td colspan="1" class="text-center">Oh so empty...</td>
+        </tr>
+    }
+</tbody>
 
                 </table>
-                    @if (Model.Users != null && Model.Users.Any())
-                    {
-                        <!-- Additional Text Box -->
-                        <div class="custom-text-box">
-                            <p>
-                                Click your name to proceed to your event page
-                            </p>
-                        </div>
-                    }
+                @if (Model.Users != null && Model.Users.Any())
+                {
+                    <!-- Additional Text Box -->
+                    <div class="custom-text-box">
+                        <p>
+                            Click your name to proceed to your event page
+                        </p>
+                    </div>
+                }
             </div>
         </div>
         <!-- Form on the left -->
@@ -59,7 +58,7 @@
                 <div class="form-group">
                     <!-- Input field for the user's name -->
                     <input asp-for="NewUser" class="form-control" placeholder="Enter your name" />
-                <button type="submit" class="btn btn-primary mt-2 w-100">Submit</button>
+                    <button type="submit" class="btn btn-primary mt-2 w-100">Submit</button>
             </form>
         </div>
 

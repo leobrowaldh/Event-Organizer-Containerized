@@ -9,22 +9,25 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Event_Organizer.web.Pages
 {
-
     public class UserSelectModel(IDataAccess injectedDataAccess) : PageModel
     {
         private readonly IDataAccess _dataAccess = injectedDataAccess;
+
         [BindProperty(SupportsGet = true)]
         public Guid EventId { get; set; }
+
         public ICollection<User>? Users { get; set; }
+
         [BindProperty]
         [Required(ErrorMessage = "You must enter a name.")]
         [MinLength(1, ErrorMessage = "Name must have at least one character.")]
         public string? NewUser { get; set; }
+
         public void OnGet()
         {
-
             Users = _dataAccess.GetEventUsers(EventId);
         }
+
         public IActionResult OnPost()
         {
             // Always reload the list of users so they appear after a post request
@@ -67,14 +70,19 @@ namespace Event_Organizer.web.Pages
             // Call the PostUser method of the IDataAccess interface to add the userToAdd object to the data source
             _dataAccess.PostUser(userToAdd);
 
-            // Store the userId in session after adding the user
-            HttpContext.Session.SetInt32("UserId", userToAdd.Id);
-
             // Redirect to the UserSelect page with the eventId parameter
             return RedirectToPage("/UserSelect", new { eventId = EventId });
         }
 
+        // New method to handle user name clicks
+        public IActionResult OnPostSelectUser(int userId)
+        {
+            // Store the userId in session
+            HttpContext.Session.SetInt32("UserId", userId);
 
+            // Redirect to the event page or wherever appropriate
+            return RedirectToPage("/Event", new { eventId = EventId });
+        }
 
         // Helper method to get the current user's ID from session
         public int? GetCurrentUserId()

@@ -121,13 +121,22 @@ namespace Event_Organizer.web.Pages
                 return RedirectToPage("/UserSelect", new { eventId = EventId });
             }
 
-            var activity = _dataAccess.GetEventActivities(eventId)
-                                      .FirstOrDefault(a => a.Id == activityId);
+            var activity = _dataAccess.GetActivityWithUsers(activityId);
 
             if (activity != null)
             {
-                _dataAccess.DeleteActivity(activity);
-            }
+				var usersToUpdate = activity.Users.ToList(); // Convert to list to avoid modification during iteration
+
+				// Update associated users to set ActivityId to null
+				foreach (var user in usersToUpdate)
+				{
+					user.ActivityId = null; 
+					_dataAccess.PutUser(user); 
+				}
+
+				_dataAccess.DeleteActivity(activity);
+
+			}
 
             return RedirectToPage("/Event", new { eventId = eventId });
         }
