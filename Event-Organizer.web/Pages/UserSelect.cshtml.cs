@@ -1,5 +1,6 @@
 using Data.DataAccess;
 using Data.Models;
+using Data.ColorList;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Http;
@@ -38,6 +39,11 @@ namespace Event_Organizer.web.Pages
 
             // Create a new User object and set the Name property to the value of NewUser
             User userToAdd = new User() { Name = NewUser };
+
+            // Assign a random color from the ColorList
+            Random rand = new Random();
+            int randomIndex = rand.Next(ColorList.Colors.Count);
+            userToAdd.VotingColor = ColorList.Colors[randomIndex];
 
             // Get the current Event object using the GetEvent method of the IDataAccess interface
             Event? currentEvent = _dataAccess.GetEvent(EventId);
