@@ -28,12 +28,11 @@ namespace Data.Context
                 .HasForeignKey(u => u.EventId)
 				.OnDelete(DeleteBehavior.Cascade);
 
-			// An Activity has many Users, each User belongs to one Activity
-			modelBuilder.Entity<User>()
+            // An Activity has many Users, each User belongs to one Activity
+            modelBuilder.Entity<User>()
                 .HasOne(u => u.Activity)
                 .WithMany(a => a.Users)
-                .HasForeignKey(u => u.ActivityId)
-				.OnDelete(DeleteBehavior.SetNull);
+                .HasForeignKey(u => u.ActivityId);
 		}
 
 
