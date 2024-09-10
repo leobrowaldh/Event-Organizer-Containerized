@@ -19,22 +19,19 @@ namespace Data.Context
             modelBuilder.Entity<Activity>()
                 .HasOne(a => a.Event)
                 .WithMany(e => e.Activities)
-                .HasForeignKey(a => a.EventId)
-				.OnDelete(DeleteBehavior.ClientSetNull);
+                .HasForeignKey(a => a.EventId);
 
-			// An Event has many Users, each User belongs to one Event
-			modelBuilder.Entity<User>()
+            // An Event has many Users, each User belongs to one Event
+            modelBuilder.Entity<User>()
                 .HasOne(u => u.Event)
                 .WithMany(e => e.Users)
-                .HasForeignKey(u => u.EventId)
-				.OnDelete(DeleteBehavior.NoAction);
+                .HasForeignKey(u => u.EventId);
 
-			// An Activity has many Users, each User belongs to one Activity
-			modelBuilder.Entity<User>()
+            // An Activity has many Users, each User belongs to one Activity
+            modelBuilder.Entity<User>()
                 .HasOne(u => u.Activity)
                 .WithMany(a => a.Users)
-                .HasForeignKey(u => u.ActivityId)
-				.OnDelete(DeleteBehavior.ClientSetNull);
+                .HasForeignKey(u => u.ActivityId);
 		}
 
 
