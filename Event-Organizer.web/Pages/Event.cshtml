@@ -43,7 +43,7 @@
                         @* If this is the Activity the User voted for display a voting symbol in users color *@
                         @foreach (User userVote in activity.Users)
                         {
-				                        <span class="badge bg-danger text-white">@userVote.Name</span>
+                            <span class="badge text-white" style="background-color: @userVote.VotingColor;">@userVote.Name</span>
                         }
 
                         <div class="d-flex justify-content-between align-items-center">
