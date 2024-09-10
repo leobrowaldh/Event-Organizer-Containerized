@@ -17,33 +17,27 @@
                             <th class="bg-primary text-white p-2 rounded mb-2 w-75 text-center">Event participants</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @if (Model.Users != null && Model.Users.Any())
-                        {
-                            @foreach (User user in Model.Users)
-                            {
-                                <tr>
-                                    <td>
-                                        <div style="display: flex; align-items: center;">
-                                            <span style="width: 10px; height: 10px; border-radius: 50%; background-color: @user.VotingColor; display: inline-block; margin-right: 8px;"></span>
-                                            <!-- Call the OnPostSelectUser handler with the userId when clicking the name -->
-                                            <form method="post" asp-page-handler="SelectUser" asp-route-userId="@user.Id">
-                                                <input type="hidden" name="EventId" value="@Model.EventId" />
-                                                <button type="submit" class="btn btn-link">@user.Name</button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                            }
-
-                        }
-                        else
-                        {
-                            <tr>
-                                <td colspan="1" class="text-center">Oh so empty...</td>
-                            </tr>
-                        }
-                    </tbody>
+<tbody>
+    @if (Model.Users != null && Model.Users.Any())
+    {
+        @foreach (User user in Model.Users)
+        {
+            <tr>
+                <td>
+                    <div style="display: flex; align-items: center;">
+                        <a asp-page="Event" asp-route-eventId="@Model.EventId" class="badge text-white text-decoration-none" style="background-color: @user.VotingColor;">@user.Name</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <td colspan="1" class="text-center">Oh so empty...</td>
+        </tr>
+    }
+</tbody>
 
                 </table>
                 @if (Model.Users != null && Model.Users.Any())
