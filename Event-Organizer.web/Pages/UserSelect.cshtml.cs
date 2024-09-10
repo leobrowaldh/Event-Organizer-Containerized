@@ -36,6 +36,16 @@ namespace Event_Organizer.web.Pages
                 return Page();
             }
 
+            // Check if the name already exists in the user list
+            if (Users.Any(u => u.Name.Equals(NewUser, StringComparison.OrdinalIgnoreCase)))
+            {
+                // Add an error to the model state if the name is already taken
+                ModelState.AddModelError("", "This name has already been submitted.");
+
+                // Return the page with the error message and updated user list
+                return Page();
+            }
+
             // Create a new User object and set the Name property to the value of NewUser
             User userToAdd = new User() { Name = NewUser };
 
