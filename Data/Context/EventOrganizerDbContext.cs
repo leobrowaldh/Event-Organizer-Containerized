@@ -25,8 +25,7 @@ namespace Data.Context
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Event)
                 .WithMany(e => e.Users)
-                .HasForeignKey(u => u.EventId)
-				.OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(u => u.EventId);
 
             // An Activity has many Users, each User belongs to one Activity
             modelBuilder.Entity<User>()
