@@ -43,7 +43,7 @@ namespace Data.Migrations
 
                     b.HasIndex("EventId");
 
-                    b.ToTable("Activities");
+                    b.ToTable("Activities", (string)null);
                 });
 
             modelBuilder.Entity("Data.Models.Event", b =>
@@ -61,7 +61,7 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Events");
+                    b.ToTable("Events", (string)null);
                 });
 
             modelBuilder.Entity("Data.Models.User", b =>
@@ -91,7 +91,7 @@ namespace Data.Migrations
 
                     b.HasIndex("EventId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Data.Models.Activity", b =>

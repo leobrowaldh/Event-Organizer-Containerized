@@ -1,5 +1,6 @@
 ﻿using Data.Context;
 using Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Data.DataAccess
 {
@@ -64,6 +65,12 @@ namespace Data.DataAccess
             return true;
         }
 
+		public Activity? GetActivityWithUsers(int activityId)
+		{
+			return _db.Activities
+						   .Include(a => a.Users) // Include associated users
+						   .FirstOrDefault(a => a.Id == activityId);
+		}
 
-    }
+	}
 }

@@ -15,6 +15,7 @@ namespace Data.DataAccess
 		public void PutUser(User user);
         public bool UpdateActivity(Activity activity);
         public bool DeleteActivity(Activity activity);
+        public Activity? GetActivityWithUsers(int activityId);
 
-    }
+	}
 }
