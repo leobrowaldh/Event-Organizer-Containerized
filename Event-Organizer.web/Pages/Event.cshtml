@@ -9,19 +9,10 @@
 }
 
 
-<nav class="navbar bg-body-tertiaryc mb-4">
+<nav class="navbar bg-body-tertiary mb-4">
     <div class="container-fluid d-flex justify-content-center">
-        <h1 class="text-dark bg-light p-3 rounded">@($"Welcome {Model.CurrentUser?.Name ?? "User"} to {Model.ActiveEvent?.Name ?? "No Event Found"}")</h1>
-    </div>
-</nav>
-
-
-<div class="container-fluid mb-4">
-    <!-- White background container -->
-    <div style="background-color: white; padding: 20px; border-radius: 10px;">
-        <h2 class="display-5">
-            Hello
-            <!-- User name badge -->
+        <h1 class="text-dark bg-light p-3 rounded">
+            Welcome
             @if (Model.CurrentUser?.VotingColor != null)
             {
                 <span class="badge text-white" style="background-color: @Model.CurrentUser.VotingColor;">
@@ -34,7 +25,17 @@
                     @Model.CurrentUser?.Name
                 </span>
             }
-            !
+            to @(Model.ActiveEvent?.Name ?? "No Event Found")
+        </h1>
+    </div>
+</nav>
+
+
+<div class="container-fluid mb-4">
+    <!-- White background container -->
+    <div style="background-color: white; padding: 20px; border-radius: 10px;">
+        <h2 class="display-5">
+            Hello @Model.CurrentUser?.Name!
         </h2>
         <h4>
             @((Model.ActiveEvent != null) ?
