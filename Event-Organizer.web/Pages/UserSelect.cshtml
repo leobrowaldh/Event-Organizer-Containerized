@@ -26,7 +26,11 @@
                                     <td>
                                         <div style="display: flex; align-items: center;">
                                             <span style="width: 10px; height: 10px; border-radius: 50%; background-color: @user.VotingColor; display: inline-block; margin-right: 8px;"></span>
-                                            <a asp-page="Event" asp-route-eventId="@Model.EventId">@user.Name</a>
+                                            <!-- Call the OnPostSelectUser handler with the userId when clicking the name -->
+                                            <form method="post" asp-page-handler="SelectUser" asp-route-userId="@user.Id">
+                                                <input type="hidden" name="EventId" value="@Model.EventId" />
+                                                <button type="submit" class="btn btn-link">@user.Name</button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>
@@ -42,15 +46,15 @@
                     </tbody>
 
                 </table>
-                    @if (Model.Users != null && Model.Users.Any())
-                    {
-                        <!-- Additional Text Box -->
-                        <div class="custom-text-box">
-                            <p>
-                                Click your name to proceed to your event page
-                            </p>
-                        </div>
-                    }
+                @if (Model.Users != null && Model.Users.Any())
+                {
+                    <!-- Additional Text Box -->
+                    <div class="custom-text-box">
+                        <p>
+                            Click your name to proceed to your event page
+                        </p>
+                    </div>
+                }
             </div>
         </div>
         <!-- Form on the left -->
@@ -60,7 +64,7 @@
                 <div class="form-group">
                     <!-- Input field for the user's name -->
                     <input asp-for="NewUser" class="form-control" placeholder="Enter your name" />
-                <button type="submit" class="btn btn-primary mt-2 w-100">Submit</button>
+                    <button type="submit" class="btn btn-primary mt-2 w-100">Submit</button>
             </form>
         </div>
 
