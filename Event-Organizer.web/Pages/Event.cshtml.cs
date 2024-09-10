@@ -10,7 +10,7 @@ namespace Event_Organizer.web.Pages
     {
         public ICollection<User>? Users { get; set; }
 
-        private readonly IDataAccess _dataAccess = injectedDataAccess;
+        private readonly IDataAccess _dataAccess;
 
         public EventModel(IDataAccess injectedDataAccess)
         {
