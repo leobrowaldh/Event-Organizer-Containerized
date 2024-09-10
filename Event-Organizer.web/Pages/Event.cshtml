@@ -17,8 +17,31 @@
 
 
 <div class="container-fluid mb-4">
-	<h2 class="display-5"> Hello @(Model.CurrentUser.Name !)</h2>
-	<h4>@((Model.ActiveEvent != null) ? (Model.ActiveEvent.OpenForEditing ? "Feel free to add some activities" : "Time to vote") : "No Event Found")</h4>
+    <!-- White background container -->
+    <div style="background-color: white; padding: 20px; border-radius: 10px;">
+        <h2 class="display-5">
+            Hello
+            <!-- User name badge -->
+            @if (Model.CurrentUser?.VotingColor != null)
+            {
+                <span class="badge text-white" style="background-color: @Model.CurrentUser.VotingColor;">
+                    @Model.CurrentUser?.Name
+                </span>
+            }
+            else
+            {
+                <span class="badge text-white" style="background-color: #007bff;">
+                    @Model.CurrentUser?.Name
+                </span>
+            }
+            !
+        </h2>
+        <h4>
+            @((Model.ActiveEvent != null) ?
+                (Model.ActiveEvent.OpenForEditing ? "Feel free to add some activities" : "Time to vote") :
+                "No Event Found")
+        </h4>
+    </div>
 </div>
 
 <div class="container-fluid mt-4">
@@ -122,8 +145,7 @@
             @foreach (User participant in Model.Users)
             {
                 <li class="list-group-item">
-                    <span style="width: 10px; height: 10px; border-radius: 50%; background-color: @participant.VotingColor; display: inline-block; margin-right: 8px;"></span>
-                    @participant.Name
+                    <span class="badge text-white" style="background-color: @participant.VotingColor;">@participant.Name</span>
                 </li>
             }
         </ul>

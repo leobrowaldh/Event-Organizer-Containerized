@@ -25,8 +25,7 @@
                                 <tr>
                                     <td>
                                         <div style="display: flex; align-items: center;">
-                                            <span style="width: 10px; height: 10px; border-radius: 50%; background-color: @user.VotingColor; display: inline-block; margin-right: 8px;"></span>
-                                            <a asp-page="Event" asp-route-eventId="@Model.EventId">@user.Name</a>
+                                            <a asp-page="Event" asp-route-eventId="@Model.EventId" class="badge text-white text-decoration-none" style="background-color: @user.VotingColor;">@user.Name</a>
                                         </div>
                                     </td>
                                 </tr>
