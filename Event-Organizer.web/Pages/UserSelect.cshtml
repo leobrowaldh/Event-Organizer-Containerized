@@ -23,7 +23,12 @@
                             @foreach (User user in Model.Users)
                             {
                                 <tr>
-                                    <td><a asp-page="Event" asp-route-eventId="@Model.EventId">@user.Name</a></td>
+                                    <td>
+                                        <div style="display: flex; align-items: center;">
+                                            <span style="width: 10px; height: 10px; border-radius: 50%; background-color: @user.VotingColor; display: inline-block; margin-right: 8px;"></span>
+                                            <a asp-page="Event" asp-route-eventId="@Model.EventId">@user.Name</a>
+                                        </div>
+                                    </td>
                                 </tr>
                             }
 
