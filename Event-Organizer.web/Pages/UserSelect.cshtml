@@ -17,27 +17,34 @@
                             <th class="bg-primary text-white p-2 rounded mb-2 w-75 text-center">Event participants</th>
                         </tr>
                     </thead>
-<tbody>
-    @if (Model.Users != null && Model.Users.Any())
-    {
-        @foreach (User user in Model.Users)
-        {
-            <tr>
-                <td>
-                    <div style="display: flex; align-items: center;">
-                        <a asp-page="Event" asp-route-eventId="@Model.EventId" class="badge text-white text-decoration-none" style="background-color: @user.VotingColor;">@user.Name</a>
-                    </div>
-                </td>
-            </tr>
-        }
-    }
-    else
-    {
-        <tr>
-            <td colspan="1" class="text-center">Oh so empty...</td>
-        </tr>
-    }
-</tbody>
+                    <tbody>
+                        @if (Model.Users != null && Model.Users.Any())
+                        {
+                            @foreach (User user in Model.Users)
+                            {
+                                <tr>
+                                    <td>
+                                        <div style="display: flex; align-items: center;">
+                                            <!-- Badge with user color -->
+                                            <form method="post" asp-page-handler="SelectUser" asp-route-userId="@user.Id" style="display: inline;">
+                                                <input type="hidden" name="EventId" value="@Model.EventId" />
+                                                <button type="submit" class="btn badge text-white text-decoration-none" style="background-color: @user.VotingColor; border: none; padding: 10px; margin-right: 8px;">
+                                                    @user.Name
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="1" class="text-center">Oh so empty...</td>
+                            </tr>
+                        }
+                    </tbody>
 
                 </table>
                 @if (Model.Users != null && Model.Users.Any())
