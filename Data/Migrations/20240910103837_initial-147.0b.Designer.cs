@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(EventOrganizerDbContext))]
-    [Migration("20240910103044_explicit-default-deletion")]
-    partial class explicitdefaultdeletion
+    [Migration("20240910103837_initial-147.0b")]
+    partial class initial1470b
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -102,6 +102,7 @@ namespace Data.Migrations
                     b.HasOne("Data.Models.Event", "Event")
                         .WithMany("Activities")
                         .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Event");
@@ -116,6 +117,7 @@ namespace Data.Migrations
                     b.HasOne("Data.Models.Event", "Event")
                         .WithMany("Users")
                         .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Activity");
