@@ -110,6 +110,7 @@
             @foreach (User participant in Model.Users)
             {
                 <li class="list-group-item">
+                    <span style="width: 10px; height: 10px; border-radius: 50%; background-color: @participant.VotingColor; display: inline-block; margin-right: 8px;"></span>
                     @participant.Name
                 </li>
             }
