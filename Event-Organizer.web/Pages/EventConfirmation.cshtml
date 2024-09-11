@@ -5,10 +5,15 @@
 }
 
 <div class="text-center bg-white p-4 rounded shadow" style="max-width: 500px; margin: auto; margin-top: 50px;">
-    <h3>Event Created!</h3>
-    <p>Here is the link to your event. Keep it secret, keep it safe; it's the only way to access the event.</p>
-    <p>Copy the url and send it to the people you wish will attend the event.</p>
-    <p></p>
+    <div class="position-relative text-center">
+        <h3>Event Created!</h3>
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-danger rounded-circle position-absolute top-0 end-0" data-bs-toggle="modal" data-bs-target="#tutorialModal">
+            <i class="bi bi-question-circle"></i>
+        </button>
+    </div>
+
 
     <div class="mb-3">
         <input id="eventLink" type="text" class="form-control" value="@TempData["EventLink"]" readonly>
@@ -22,6 +27,28 @@
         <button type="submit" class="btn btn-primary" style="margin-top: 1px;">Proceed to event list</button>
     </form>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="tutorialModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+				<h4>This is the link for your event.</h4>
+				<p>Share it with those who are going to participate in the event.</p>
+				<p>Having access to the link means being able to add/edit/remove activities, as well as voting.</p>
+				<p>Dont loose the link, or you will have to create a new event.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
     <script>
         function copyToClipboard() {
