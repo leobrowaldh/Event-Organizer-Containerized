@@ -32,15 +32,22 @@
 
 
 <div class="container-fluid mt-4">
-    <!-- Add Activity Form -->
-    <form method="post" asp-page-handler="AddActivity" id="addActivityForm">
-        <input type="hidden" name="EventId" value="@Model.EventId" />
-        <input type="hidden" name="ActivityName" value="New Activity" />
-        <input type="hidden" name="Description" value="Describe the activity..." />
+    <div class="d-flex align-items-center">
+        <!-- Add Activity Form -->
+        <form method="post" asp-page-handler="AddActivity" id="addActivityForm" class="me-3">
+            <input type="hidden" name="EventId" value="@Model.EventId" />
+            <input type="hidden" name="ActivityName" value="New Activity" />
+            <input type="hidden" name="Description" value="Describe the activity..." />
+            <button type="submit" class="btn btn-success">Add Activity</button>
+        </form>
 
-        <button type="submit" class="btn btn-success">Add Activity</button>
-    </form>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-danger rounded-circle" data-bs-toggle="modal" data-bs-target="#tutorialModal">
+            <i class="bi bi-question-circle"></i>
+        </button>
+    </div>
 </div>
+
 
 <div class="row" id="activity-list">
     @if (Model.Activities != null)
@@ -106,6 +113,30 @@
             </div>
         }
     }
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="tutorialModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">This is the event you are currently organizing.</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Here you can: </p>
+                <h4>1) Add activities to the event</h4>
+                <p>Just press the "add activity" button and type a name and optional description for an activity you would like to include as a voting alternative for the event.</p>
+                <p>The activity you added will appear on the event page so that people can vote on it.</p>
+                <h4>2) Vote on existing activities</h4>
+                <p>Press the "Vote" button to select the activity of your preference.</p>
+                <p>May the best activity win!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
