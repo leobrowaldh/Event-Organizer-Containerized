@@ -6,7 +6,7 @@
 }
 
 <div class="container mt-5">
-    <div class="row">
+    <div class="row position-relative">
 
         <!-- Table on the right -->
         <div class="col-md-6">
@@ -69,5 +69,29 @@
             </form>
         </div>
 
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-danger rounded-circle position-absolute top-0 end-0" data-bs-toggle="modal" data-bs-target="#tutorialModal">
+            <i class="bi bi-question-circle"></i>
+        </button>
+
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="tutorialModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">This is the user selection/creation interface</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>If your name appear on the list, select it, to proceed to the event</p>
+                <p>If your name does not appear on the list, add it by typing in your name and pressing the submit button.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
 </div>
