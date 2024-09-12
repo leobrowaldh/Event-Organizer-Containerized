@@ -178,9 +178,17 @@ namespace Event_Organizer.web.Pages
 
         public IActionResult OnPostEndVoting()
         {
-            if (CurrentUserId == null)
+            Users = _dataAccess.GetEventUsers(EventId);
+            if (CurrentUserId == null || !Users.Any(u => u.Id == CurrentUserId))
             {
+                // If there's no user in session or the current user is not in the Users collection, redirect them to the UserSelect page
                 return RedirectToPage("/UserSelect", new { eventId = EventId });
+            }
+
+            Activities = _dataAccess.GetEventActivities(EventId);
+            if (Activities == null || Activities.Count == 0)
+            {
+                return Page();
             }
 
             // Get the active event
