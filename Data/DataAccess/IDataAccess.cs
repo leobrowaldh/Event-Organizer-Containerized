@@ -12,10 +12,11 @@ namespace Data.DataAccess
         public ICollection<User> GetEventUsers(Guid eventId);
         public User? GetUser(int userId);
         public bool PostUser(User user);
-		public void PutUser(User user);
+        public void PutUser(User user);
         public bool UpdateActivity(Activity activity);
         public bool DeleteActivity(Activity activity);
         public Activity? GetActivityWithUsers(int activityId);
+        public void UpdateEvent(Event updatedEvent);
 
-	}
+    }
 }
