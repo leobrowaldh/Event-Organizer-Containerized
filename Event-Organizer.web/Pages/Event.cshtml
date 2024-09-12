@@ -172,4 +172,13 @@
     {
         <p class="text-dark bg-light p-3 rounded">No participants found</p>
     }
-</div> 
+</div>
+
+<!-- End Voting Button -->
+@if (Model.ActiveEvent != null && Model.ActiveEvent.OpenForEditing)
+{
+    <form method="post" asp-page-handler="EndVoting">
+        <input type="hidden" name="EventId" value="@Model.ActiveEvent.Id" />
+        <button type="submit" class="btn btn-warning">End Voting</button>
+    </form>
+}

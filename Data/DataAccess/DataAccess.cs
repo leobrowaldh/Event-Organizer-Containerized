@@ -1,6 +1,7 @@
 ﻿using Data.Context;
 using Data.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace Data.DataAccess
 {
@@ -8,17 +9,23 @@ namespace Data.DataAccess
     {
         private readonly EventOrganizerDbContext _db = injectedContext;
 
-		public Activity? GetActivity(int activityId) => _db.Activities.Find(activityId);
+        public Models.Activity? GetActivity(int activityId) => _db.Activities.Find(activityId);
 
-		public Event? GetEvent(Guid eventId) => _db.Events.Find(eventId);
+        public Event? GetEvent(Guid eventId) => _db.Events.Find(eventId);
 
-        public ICollection<Activity> GetEventActivities(Guid eventId) => _db.Activities.Where(a => a.EventId == eventId).ToList();
+        public ICollection<Models.Activity> GetEventActivities(Guid eventId)
+        {
+            return _db.Activities
+                       .Include(a => a.Users)
+                       .Where(a => a.EventId == eventId)
+                       .ToList();
+        }
 
         public ICollection<User> GetEventUsers(Guid eventId) => _db.Users.Where(u => u.EventId == eventId).ToList();
 
         public User? GetUser(int userId) => _db.Users.Find(userId);
 
-        public bool PostActivity(Activity activity)
+        public bool PostActivity(Models.Activity activity)
         {
             // save activity to db
             _db.Activities.Add(activity);
@@ -43,21 +50,21 @@ namespace Data.DataAccess
             return true;
         }
 
-		public void PutUser(User user)
-		{
-			_db.Users.Update(user);
+        public void PutUser(User user)
+        {
+            _db.Users.Update(user);
             _db.SaveChanges();
-		}
-	
-		public bool UpdateActivity(Activity activity)
-		{
-			// Update activity in db
-			_db.Activities.Update(activity);
-			_db.SaveChanges();
-			return true;
-		}
+        }
 
-        public bool DeleteActivity(Activity activity)
+        public bool UpdateActivity(Models.Activity activity)
+        {
+            // Update activity in db
+            _db.Activities.Update(activity);
+            _db.SaveChanges();
+            return true;
+        }
+
+        public bool DeleteActivity(Models.Activity activity)
         {
             // Remove activity from db
             _db.Activities.Remove(activity);
@@ -65,12 +72,17 @@ namespace Data.DataAccess
             return true;
         }
 
-		public Activity? GetActivityWithUsers(int activityId)
-		{
-			return _db.Activities
-						   .Include(a => a.Users) // Include associated users
-						   .FirstOrDefault(a => a.Id == activityId);
-		}
+        public Models.Activity? GetActivityWithUsers(int activityId)
+        {
+            return _db.Activities
+                           .Include(a => a.Users) // Include associated users
+                           .FirstOrDefault(a => a.Id == activityId);
+        }
 
-	}
+        public void UpdateEvent(Event updatedEvent)
+        {
+            _db.Events.Update(updatedEvent);
+            _db.SaveChanges();
+        }
+    }
 }
