@@ -54,9 +54,9 @@ namespace Event_Organizer.web.Pages
                 CurrentUser = _dataAccess.GetUser(CurrentUserId.Value);
             }
 
-            if (CurrentUserId == null)
+            if (CurrentUserId == null || !Users.Any(u => u.Id == CurrentUserId))
             {
-                // If there's no user in session, redirect them to the UserSelect page
+                // If there's no user in session or the current user is not in the Users collection, redirect them to the UserSelect page
                 return RedirectToPage("/UserSelect", new { eventId = EventId });
             }
 
@@ -72,10 +72,11 @@ namespace Event_Organizer.web.Pages
         public IActionResult OnPostAddActivity()
         {
             ActiveEvent = _dataAccess.GetEvent(EventId);
+            Users = _dataAccess.GetEventUsers(EventId);
             // Ensure the user is set in the session
-            if (CurrentUserId == null)
+            if (CurrentUserId == null || !Users.Any(u => u.Id == CurrentUserId))
             {
-                // If there's no user in session, redirect them to the UserSelect page
+                // If there's no user in session or the current user is not in the Users collection, redirect them to the UserSelect page
                 return RedirectToPage("/UserSelect", new { eventId = EventId });
             }
 
@@ -99,8 +100,10 @@ namespace Event_Organizer.web.Pages
         // Handle activity edits
         public IActionResult OnPostEditActivity()
         {
-            if (CurrentUserId == null)
+            Users = _dataAccess.GetEventUsers(EventId);
+            if (CurrentUserId == null || !Users.Any(u => u.Id == CurrentUserId))
             {
+                // If there's no user in session or the current user is not in the Users collection, redirect them to the UserSelect page
                 return RedirectToPage("/UserSelect", new { eventId = EventId });
             }
 
@@ -123,8 +126,10 @@ namespace Event_Organizer.web.Pages
         // Handle activity deletion
         public IActionResult OnPostDeleteActivity(Guid eventId, int activityId)
         {
-            if (CurrentUserId == null)
+            Users = _dataAccess.GetEventUsers(EventId);
+            if (CurrentUserId == null || !Users.Any(u => u.Id == CurrentUserId))
             {
+                // If there's no user in session or the current user is not in the Users collection, redirect them to the UserSelect page
                 return RedirectToPage("/UserSelect", new { eventId = EventId });
             }
 
@@ -150,9 +155,11 @@ namespace Event_Organizer.web.Pages
 
         public IActionResult OnPostVote(int activityId)
         {
-            ActiveEvent = _dataAccess.GetEvent(EventId);
-            if (CurrentUserId == null)
+			ActiveEvent = _dataAccess.GetEvent(EventId);
+            Users = _dataAccess.GetEventUsers(EventId);
+            if (CurrentUserId == null || !Users.Any(u => u.Id == CurrentUserId))
             {
+                // If there's no user in session or the current user is not in the Users collection, redirect them to the UserSelect page
                 return RedirectToPage("/UserSelect", new { eventId = EventId });
             }
             else
