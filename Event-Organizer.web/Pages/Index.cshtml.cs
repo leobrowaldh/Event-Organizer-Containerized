@@ -22,7 +22,7 @@ namespace Event_Organizer.web.Pages
 
 		public void OnGet()
 		{
-            // Check if the "FirstVisit" cookie exists
+            // Check if the "FirstTimeCreatingEvent" cookie exists
             var cookie = Request.Cookies["FirstTimeCreatingEvent"];
 
             if (string.IsNullOrEmpty(cookie))
@@ -30,12 +30,6 @@ namespace Event_Organizer.web.Pages
                 // If the cookie doesn't exist, it's the user's first visit
                 FirstTimeCreatingEvent = true;
 
-                // Set the "FirstVisit" cookie with a value and expiration date
-                var cookieOptions = new CookieOptions
-                {
-                    Expires = DateTime.Now.AddYears(1) // Set the cookie to expire in 1 year
-                };
-                Response.Cookies.Append("FirstTimeCreatingEvent", "true", cookieOptions);
             }
             else
             {
