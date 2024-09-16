@@ -1,0 +1,93 @@
+﻿@page
+@model AboutUsModel
+@{
+    ViewData["Title"] = "About Us";
+}
+<style>
+    h2
+    {
+        text-align: center;
+    }
+    .content-container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        margin: auto;
+        margin-top:20px;
+    }
+
+    body {
+        background-color: #f0f0f0; /* light gray background for contrast */
+    }
+
+
+    .team-member {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+        .team-member img {
+            width: 100px; /* Fixed width */
+            height: 100px; /* Fixed height */
+            object-fit: cover; /* Ensures image stays proportional */
+            border-radius: 50%; /* Makes images circular */
+            margin-right: 20px;
+            flex-shrink: 0; /* Prevents images from shrinking in small screen sizes */
+        }
+
+        .team-member div {
+            flex-grow: 1;
+        }
+
+</style>
+
+<div class="content-container">
+    <h1 style="text-align: center; margin-bottom: 15px;">@ViewData["Title"]</h1>
+
+    <p style="text-align:center;">Welcome to <strong>Event Organizer</strong>! We are a team of four passionate students from a vocational college, dedicated to making event planning easier and more fun for groups of friends. Whether it’s a casual night out or an unforgettable adventure, we’re here to help you create memorable experiences with ease.</p>
+
+    <h2>Meet the Team</h2>
+
+    <div class="team-member">
+        <img src="images/Christos.jpeg" alt="Christos">
+        <div>
+            <strong>Christos</strong> – The visionary, bringing fresh ideas and creative flair to every event.
+        </div>
+    </div>
+
+    <div class="team-member">
+        <img src="images/Leo.png" alt="Leo">
+        <div>
+            <strong>Leo</strong> – Our logistics expert, ensuring every detail runs smoothly.
+        </div>
+    </div>
+
+    <div class="team-member">
+        <img src="images/Markus.jpeg" alt="Markus">
+        <div>
+            <strong>Markus</strong> – Marketing whiz, ensuring our service reaches the right audience.
+        </div>
+    </div>
+
+    <div class="team-member">
+        <img src="images/CV.jpeg" alt="Carl-Victor">
+        <div>
+            <strong>Carl-Victor</strong> – The tech guru, keeping our platform running flawlessly.
+        </div>
+    </div>
+
+    <h2>What We Do</h2>
+    <p style="text-align:center;">At <strong>Event Organizer</strong>, we simplify event planning for groups of friends. From finding the perfect venue to organizing activities, we’ve got it covered. Our service is designed to help you focus on what matters most – having fun together!</p>
+
+    <h2>Why Choose Us?</h2>
+    <ul>
+        <li><strong>Effortless Event Planning</strong> – Our app streamlines the process, making it simple to organize and manage your events with just a few clicks.</li>
+        <li><strong>Seamless Coordination</strong> – Easily coordinate with friends and manage all event details in one place.</li>
+    </ul>
+
+    <h2>Let’s Plan Something Amazing!</h2>
+    <p style="text-align:center;">No matter the occasion, we’re here to help you create unforgettable memories with your friends. Let’s plan your next event, together!</p>
+</div>
