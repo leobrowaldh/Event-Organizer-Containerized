@@ -95,3 +95,14 @@
         </div>
     </div>
 </div>
+
+<!-- Check if the modal should be shown -->
+@if (Model.IsFirstTimeOnUserList)
+{
+    <script>
+        window.onload = function () {
+            var tutorialModal = new bootstrap.Modal(document.getElementById('tutorialModal'));
+            tutorialModal.show();
+        };
+    </script>
+}

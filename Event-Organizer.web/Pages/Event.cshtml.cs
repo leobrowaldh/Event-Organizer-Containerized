@@ -8,6 +8,7 @@ namespace Event_Organizer.web.Pages
 {
     public class EventModel : PageModel
     {
+        public bool IsFirstTimeOnEventPage { get; set; }
         public ICollection<User>? Users { get; set; }
 
         private readonly IDataAccess _dataAccess;
@@ -45,6 +46,27 @@ namespace Event_Organizer.web.Pages
 
         public IActionResult OnGet()
         {
+            // Check if the "IsFirstTimeOnSite" cookie exists
+            var cookie = Request.Cookies["IsFirstTimeOnEventPage"];
+
+            if (string.IsNullOrEmpty(cookie))
+            {
+                // If the cookie doesn't exist, it's the user's first visit
+                IsFirstTimeOnEventPage = true;
+
+                // Set the "FirstVisit" cookie with a value and expiration date
+                var cookieOptions = new CookieOptions
+                {
+                    Expires = DateTime.Now.AddYears(1) // Set the cookie to expire in 1 year
+                };
+                Response.Cookies.Append("IsFirstTimeOnEventPage", "true", cookieOptions);
+            }
+            else
+            {
+                // If the cookie exists, it's not the first visit
+                IsFirstTimeOnEventPage = false;
+            }
+
             Users = _dataAccess.GetEventUsers(EventId);
             ActiveEvent = _dataAccess.GetEvent(EventId);
 			Activities = _dataAccess.GetEventActivities(EventId);

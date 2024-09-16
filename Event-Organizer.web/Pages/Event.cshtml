@@ -173,3 +173,15 @@
         <p class="text-dark bg-light p-3 rounded">No participants found</p>
     }
 </div> 
+
+
+<!-- Check if the modal should be shown -->
+@if (Model.IsFirstTimeOnEventPage)
+{
+    <script>
+        window.onload = function () {
+            var tutorialModal = new bootstrap.Modal(document.getElementById('tutorialModal'));
+            tutorialModal.show();
+        };
+    </script>
+}

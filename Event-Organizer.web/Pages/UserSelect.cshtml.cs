@@ -11,6 +11,7 @@ namespace Event_Organizer.web.Pages
 {
     public class UserSelectModel(IDataAccess injectedDataAccess) : PageModel
     {
+        public bool IsFirstTimeOnUserList { get; set; }
         private readonly IDataAccess _dataAccess = injectedDataAccess;
 
         [BindProperty(SupportsGet = true)]
@@ -26,6 +27,28 @@ namespace Event_Organizer.web.Pages
         public void OnGet()
         {
             Users = _dataAccess.GetEventUsers(EventId);
+
+            // Check if the "FirstTimeCreatingEvent" cookie exists
+            var cookie = Request.Cookies["IsFirstTimeOnUserList"];
+
+            if (string.IsNullOrEmpty(cookie))
+            {
+                // If the cookie doesn't exist, it's the user's first visit
+                IsFirstTimeOnUserList = true;
+
+                // Set the "FirstVisit" cookie with a value and expiration date
+                var cookieOptions = new CookieOptions
+                {
+                    Expires = DateTime.Now.AddYears(1) // Set the cookie to expire in 1 year
+                };
+                Response.Cookies.Append("IsFirstTimeOnUserList", "true", cookieOptions);
+
+            }
+            else
+            {
+                // If the cookie exists, it's not the first visit
+                IsFirstTimeOnUserList = false;
+            }
         }
 
         public IActionResult OnPost()
