@@ -180,14 +180,34 @@
     <div class="container mt-4">
         <div class="card bg-white p-4 shadow-sm">
             <p class="text-danger mb-3"><strong>Warning:</strong> Ending voting will lock the event and count the votes to determine the winner. This action cannot be undone.</p>
-            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#endVotingModal">
+
+            <!-- End Voting Button (always visible) -->
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="@((Model.Activities == null || !Model.Activities.Any()) ? "#noActivitiesModal" : "#endVotingModal")">
                 End Voting
             </button>
         </div>
     </div>
 }
 
-<!-- End Voting Confirmation Modal -->
+<!-- Modal when there are no activities -->
+<div class="modal fade" id="noActivitiesModal" tabindex="-1" aria-labelledby="noActivitiesModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="noActivitiesModalLabel">No Activities Found</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>You cannot end the voting because there are no activities in the event. Please add activities first.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- End Voting Confirmation Modal when activities are present -->
 <div class="modal fade" id="endVotingModal" tabindex="-1" aria-labelledby="endVotingModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -208,7 +228,6 @@
         </div>
     </div>
 </div>
-</div> 
 
 
 <!-- Check if the modal should be shown -->
