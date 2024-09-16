@@ -172,6 +172,42 @@
     {
         <p class="text-dark bg-light p-3 rounded">No participants found</p>
     }
+</div>
+
+<!-- End Voting Button and Warning -->
+@if (Model.ActiveEvent != null && Model.ActiveEvent.OpenForEditing)
+{
+    <div class="container mt-4">
+        <div class="card bg-white p-4 shadow-sm">
+            <p class="text-danger mb-3"><strong>Warning:</strong> Ending voting will lock the event and count the votes to determine the winner. This action cannot be undone.</p>
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#endVotingModal">
+                End Voting
+            </button>
+        </div>
+    </div>
+}
+
+<!-- End Voting Confirmation Modal -->
+<div class="modal fade" id="endVotingModal" tabindex="-1" aria-labelledby="endVotingModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="endVotingModalLabel">Confirm End Voting</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to end the voting? This action will lock the event and count the votes to determine the winner. This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <form method="post" asp-page-handler="EndVoting">
+                    <input type="hidden" name="EventId" value="@Model.ActiveEvent.Id" />
+                    <button type="submit" class="btn btn-warning">Yes, End Voting</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 </div> 
 
 

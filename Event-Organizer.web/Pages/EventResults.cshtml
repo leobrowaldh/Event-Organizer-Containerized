@@ -1,0 +1,25 @@
+﻿@page "{eventId:guid}"
+@model Event_Organizer.web.Pages.EventResultsModel
+@{
+    ViewData["Title"] = "Event Voting Results";
+}
+
+<div class="container mt-4 bg-white p-4 rounded shadow">
+    <h2 class="text-center mb-4 bg-light p-3 rounded">Voting Results for @Model.ActiveEvent.Name</h2>
+
+    <div>
+        <h4 class="mb-3">Participants' Choices:</h4>
+        <ul class="list-group">
+            @{
+                // Find the activity with the maximum votes
+                var maxVotes = Model.ActivityResults.Max(ar => ar.VoteCount);
+            }
+            @foreach (var activityResult in Model.ActivityResults)
+            {
+                <li class="list-group-item @(activityResult.VoteCount == maxVotes ? "bg-success text-white fw-bold" : "")">
+                    <strong>@activityResult.Activity.Name</strong>: @activityResult.VoteCount votes
+                </li>
+            }
+        </ul>
+    </div>
+</div>

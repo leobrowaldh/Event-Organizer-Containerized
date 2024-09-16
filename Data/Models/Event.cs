@@ -12,6 +12,7 @@ namespace Data.Models
         public string? Name { get; set; }
 
         public bool OpenForEditing { get; set; } = true;
+        public bool? VotingEnded { get; set; } = false;
 
         // Navigation properties
         public ICollection<Activity> Activities { get; set; } = new List<Activity>();
