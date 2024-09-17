@@ -41,7 +41,7 @@
         <form method="post" asp-page-handler="AddActivity" id="addActivityForm" class="me-3">
             <input type="hidden" name="EventId" value="@Model.EventId" />
             <input type="hidden" name="ActivityName" value="New Activity" />
-            <input type="hidden" name="Description" value="Describe the activity..." />
+            <input type="hidden" name="Description" value="Details" />
             <button type="submit" class="btn btn-success">Add Activity</button>
         </form>
 
@@ -61,56 +61,60 @@
             <div class="col-sm-6 mb-3 mb-sm-0 activity-card" id="activity-@activity.Id">
                 <div class="card">
                     <div class="card-body">
-                        @* If this is the Activity the User voted for display a voting symbol in users color *@
+                        @* Display user votes *@
                         @foreach (User userVote in activity.Users)
                         {
                             <span class="badge text-white" style="background-color: @userVote.VotingColor;">@userVote.Name</span>
                         }
 
-                        <div class="d-flex justify-content-between align-items-center">
+                        <!-- Ensure the text wraps and the buttons stay aligned -->
+                        <div class="d-flex justify-content-between align-items-start">
                             <!-- Display-only fields (shown by default) -->
-                            <div id="viewMode-@activity.Id">
+                            <div id="viewMode-@activity.Id" style="word-break: break-word; max-width: 80%;">
                                 <h5 class="card-title">@activity.Name</h5>
                                 <p class="card-text">@activity.Description</p>
                             </div>
 
                             <!-- Editable form fields (hidden by default) -->
-                            <form method="post" asp-page-handler="EditActivity" id="editForm-@activity.Id" style="display:none;">
+                            <form method="post" asp-page-handler="EditActivity" id="editForm-@activity.Id" style="display:none; max-width: 70%;" onsubmit="return handleEmptyInputs('@activity.Id')">
                                 <input type="hidden" name="ActivityId" value="@activity.Id" />
                                 <input type="hidden" name="EventId" value="@Model.ActiveEvent.Id" />
 
                                 <div class="mb-3">
                                     <label for="UpdatedActivityName" class="form-label">Activity Name:</label>
-                                    <input class="form-control" name="UpdatedActivityName" value="@activity.Name" />
+                                    <input class="form-control" id="UpdatedActivityName-@activity.Id" name="UpdatedActivityName" placeholder="@activity.Name" />
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="UpdatedDescription" class="form-label">Description:</label>
-                                    <input class="form-control" name="UpdatedDescription" value="@activity.Description" />
+                                    <input class="form-control" id="UpdatedDescription-@activity.Id" name="UpdatedDescription" placeholder="@activity.Description" />
                                 </div>
 
                                 <button type="submit" class="btn btn-success">Save Changes</button>
                                 <button type="button" class="btn btn-secondary" onclick="toggleEditMode('@activity.Id')">Cancel</button>
                             </form>
 
-                            <!-- Edit Button -->
-                            <button type="button" class="btn btn-link" onclick="toggleEditMode('@activity.Id')">
-                                <i class="fas fa-cog"></i> <!-- Font Awesome cogwheel icon -->
-                            </button>
+                            <div class="d-flex flex-column align-items-end" style="min-width: 10%;">
+                                <!-- Edit Button -->
+                                <button type="button" class="btn btn-secondary m-2 w-100" onclick="toggleEditMode('@activity.Id')">
+                                    Edit
+                                </button>
 
-                            <!-- Delete Button -->
-                            <form method="post" asp-page-handler="DeleteActivity" style="display:inline;">
-                                <input type="hidden" name="ActivityId" value="@activity.Id" />
-                                <input type="hidden" name="EventId" value="@Model.ActiveEvent.Id" />
+                                <!-- Delete Button -->
+                                <form method="post" asp-page-handler="DeleteActivity" style="display:inline;" class="m-2 w-100">
+                                    <input type="hidden" name="ActivityId" value="@activity.Id" />
+                                    <input type="hidden" name="EventId" value="@Model.ActiveEvent.Id" />
+                                    <button type="submit" class="btn btn-danger w-100">Delete</button>
+                                </form>
 
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
-                            <!-- Voting Button -->
-                            <form method="post" asp-page-handler="Vote">
-				                <input type="hidden" name="EventId" value="@Model.EventId" />
-				                <input type="hidden" name="activityId" value="@activity.Id" />
-				                <button type="submit" class="btn btn-primary">VOTE</button> @* It would be nice if this button had the users color *@
-                            </form>
+                                <!-- Voting Button -->
+                                <form method="post" asp-page-handler="Vote" style="display:inline;" class="m-2 w-100">
+                                    <input type="hidden" name="EventId" value="@Model.EventId" />
+                                    <input type="hidden" name="activityId" value="@activity.Id" />
+                                    <button type="submit" class="btn btn-primary w-100">VOTE</button>
+                                </form>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -118,6 +122,26 @@
         }
     }
 </div>
+
+<script>
+    // JavaScript function to handle empty inputs
+    function handleEmptyInputs(activityId) {
+        const activityNameInput = document.getElementById(`UpdatedActivityName-${activityId}`);
+        const descriptionInput = document.getElementById(`UpdatedDescription-${activityId}`);
+
+        // If the input is empty, set its value to the placeholder (original value)
+        if (!activityNameInput.value.trim()) {
+            activityNameInput.value = activityNameInput.placeholder;
+        }
+        if (!descriptionInput.value.trim()) {
+            descriptionInput.value = descriptionInput.placeholder;
+        }
+
+        return true; // Allow form submission
+    }
+</script>
+
+
 
 <!-- Modal -->
 <div class="modal fade" id="tutorialModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -244,3 +268,4 @@
         };
     </script>
 }
+
