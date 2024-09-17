@@ -7,6 +7,10 @@
     var eventName = Model.ActiveEvent != null ? Model.ActiveEvent.Name : "No Event Found";
     ViewData["Title"] = $"Welcome {userName} to {eventName}";
 }
+<form method="get" action="/UserSelect">
+    <input type="hidden" name="eventId" value="@Request.Query["eventId"].ToString()" />
+    <button type="submit" class="btn btn-primary" style="margin-top: 5px;">Go back to event list</button>
+</form>
 
 
 <nav class="navbar bg-body-tertiary mb-4">

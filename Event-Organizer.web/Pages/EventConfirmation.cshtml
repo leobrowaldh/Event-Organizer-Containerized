@@ -23,9 +23,10 @@
     </div>
 
     <form method="get" action="/UserSelect">
-        <input type="hidden" name="eventId" value="@TempData["EventId"]" />
+        <input type="hidden" name="eventId" value="@TempData.Peek("EventId")" />
         <button type="submit" class="btn btn-primary" style="margin-top: 1px;">Proceed to event list</button>
     </form>
+
 </div>
 
 <!-- Modal -->
