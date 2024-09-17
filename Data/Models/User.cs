@@ -12,6 +12,7 @@ namespace Data.Models
         public string? Name { get; set; }
 
         public string? VotingColor { get; set; }
+        public bool IsAdmin { get; set; }
 
         // Foreign Keys
         [ForeignKey("Event")]

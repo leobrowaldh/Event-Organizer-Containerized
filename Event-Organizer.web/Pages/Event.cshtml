@@ -1,4 +1,4 @@
-﻿@page
+﻿ @page
 @using Data.DataAccess
 @using Data.Models
 @model Event_Organizer.web.Pages.EventModel
@@ -9,7 +9,7 @@
 }
 <form method="get" action="/UserSelect">
     <input type="hidden" name="eventId" value="@Request.Query["eventId"].ToString()" />
-    <button type="submit" class="btn btn-primary" style="margin-top: 5px;">Go back to event list</button>
+    <button type="submit" class="btn btn-primary" style="margin-top: 5px;">Go back to user selection</button>
 </form>
 
 
@@ -196,8 +196,8 @@
     }
 </div>
 
-<!-- End Voting Button and Warning -->
-@if (Model.ActiveEvent != null && Model.ActiveEvent.OpenForEditing)
+<!-- End Voting Button and Warning (only dispolayed for admin user.)-->
+@if (Model.ActiveEvent != null && Model.ActiveEvent.OpenForEditing && Model.CurrentUser is not null && Model.CurrentUser.IsAdmin)
 {
     <div class="container mt-4">
         <div class="card bg-white p-4 shadow-sm">

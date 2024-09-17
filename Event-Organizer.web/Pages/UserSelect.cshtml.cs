@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Event_Organizer.web.Pages
 {
@@ -75,6 +76,12 @@ namespace Event_Organizer.web.Pages
 
             // Create a new User object and set the Name property to the value of NewUser
             User userToAdd = new User() { Name = NewUser };
+
+            //Set user to admin if it is the first user in the event.
+            if (Users.Count == 0 || Users is null)
+            {
+                userToAdd.IsAdmin = true;
+            }
 
             // Assign a random color from the ColorList
             Random rand = new Random();
