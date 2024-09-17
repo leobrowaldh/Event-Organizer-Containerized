@@ -35,6 +35,8 @@ namespace Event_Organizer.web.Pages
 
         [BindProperty]
         public int ActivityId { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int? NewActivityId { get; set; }
 
         public Event? ActiveEvent { get; set; }
 
@@ -102,10 +104,12 @@ namespace Event_Organizer.web.Pages
                 return RedirectToPage("/UserSelect", new { eventId = EventId });
             }
 
+            Activity? newActivity = null;
+
             if (ActiveEvent != null && !string.IsNullOrEmpty(ActivityName))
             {
                 // Create and add the new activity to the event
-                Activity newActivity = new Activity()
+                newActivity = new Activity()
                 {
                     Name = ActivityName,
                     EventId = EventId, // Set the EventId directly
@@ -113,6 +117,13 @@ namespace Event_Organizer.web.Pages
                 };
 
                 _dataAccess.PostActivity(newActivity);
+            }
+
+            // Assuming newActivity has been persisted and has a valid Id
+            if (newActivity != null)
+            {
+                // Redirect to the same page with the new activityId as a query parameter
+                return RedirectToPage("/Event", new { eventId = EventId, newActivityId = newActivity.Id });
             }
 
             return RedirectToPage("/Event", new { eventId = EventId });

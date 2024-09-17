@@ -61,25 +61,23 @@
             <div class="col-sm-6 mb-3 mb-sm-0 activity-card" id="activity-@activity.Id">
                 <div class="card">
                     <div class="card-body">
-                        @* Display user votes *@
                         @foreach (User userVote in activity.Users)
                         {
                             <span class="badge text-white" style="background-color: @userVote.VotingColor;">@userVote.Name</span>
                         }
 
-                        <!-- Ensure the text wraps and the buttons stay aligned -->
                         <div class="d-flex justify-content-between align-items-start">
-                            <!-- Display-only fields (shown by default) -->
-                            <div id="viewMode-@activity.Id" style="word-break: break-word; max-width: 80%;">
-                                <h5 class="card-title">@activity.Name</h5>
-                                <p class="card-text">@activity.Description</p>
+                            <!-- Determine if this is the new activity and start it in edit mode -->
+                            <!-- View Mode Section -->
+                            <div id="viewMode-@activity.Id" style="word-break: break-word; max-width: 80%; padding: 15px 0; display: @(Model.NewActivityId == activity.Id ? "none" : "block");">
+                                <h5 class="card-title" style="margin-bottom: 10px;">@activity.Name</h5>
+                                <p class="card-text" style="margin-bottom: 15px;">@activity.Description</p>
                             </div>
 
-                            <!-- Editable form fields (hidden by default) -->
-                            <form method="post" asp-page-handler="EditActivity" id="editForm-@activity.Id" style="display:none; max-width: 70%;" onsubmit="return handleEmptyInputs('@activity.Id')">
+                            <!-- Edit Mode Section -->
+                            <form method="post" asp-page-handler="EditActivity" id="editForm-@activity.Id" style="display: @(Model.NewActivityId == activity.Id ? "block" : "none");" onsubmit="return handleEmptyInputs('@activity.Id')">
                                 <input type="hidden" name="ActivityId" value="@activity.Id" />
                                 <input type="hidden" name="EventId" value="@Model.ActiveEvent.Id" />
-
                                 <div class="mb-3">
                                     <label for="UpdatedActivityName" class="form-label">Activity Name:</label>
                                     <input class="form-control" id="UpdatedActivityName-@activity.Id" name="UpdatedActivityName" placeholder="@activity.Name" />
@@ -95,19 +93,14 @@
                             </form>
 
                             <div class="d-flex flex-column align-items-end" style="min-width: 10%;">
-                                <!-- Edit Button -->
-                                <button type="button" class="btn btn-secondary m-2 w-100" onclick="toggleEditMode('@activity.Id')">
-                                    Edit
-                                </button>
+                                <button type="button" class="btn btn-secondary m-2 w-100" onclick="toggleEditMode('@activity.Id')">Edit</button>
 
-                                <!-- Delete Button -->
                                 <form method="post" asp-page-handler="DeleteActivity" style="display:inline;" class="m-2 w-100">
                                     <input type="hidden" name="ActivityId" value="@activity.Id" />
                                     <input type="hidden" name="EventId" value="@Model.ActiveEvent.Id" />
                                     <button type="submit" class="btn btn-danger w-100">Delete</button>
                                 </form>
 
-                                <!-- Voting Button -->
                                 <form method="post" asp-page-handler="Vote" style="display:inline;" class="m-2 w-100">
                                     <input type="hidden" name="EventId" value="@Model.EventId" />
                                     <input type="hidden" name="activityId" value="@activity.Id" />
@@ -122,6 +115,7 @@
         }
     }
 </div>
+
 
 <script>
     // JavaScript function to handle empty inputs
