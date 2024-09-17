@@ -1,4 +1,4 @@
-﻿@page
+﻿ @page
 @using Data.DataAccess
 @using Data.Models
 @model Event_Organizer.web.Pages.EventModel
@@ -178,8 +178,8 @@
     }
 </div>
 
-<!-- End Voting Button and Warning -->
-@if (Model.ActiveEvent != null && Model.ActiveEvent.OpenForEditing)
+<!-- End Voting Button and Warning (only dispolayed for admin user.)-->
+@if (Model.ActiveEvent != null && Model.ActiveEvent.OpenForEditing && Model.CurrentUser is not null && Model.CurrentUser.IsAdmin)
 {
     <div class="container mt-4">
         <div class="card bg-white p-4 shadow-sm">
