@@ -36,17 +36,21 @@
 
 
 <div class="container-fluid mt-4">
-    <div class="d-flex align-items-center">
-        <!-- Add Activity Form -->
-        <form method="post" asp-page-handler="AddActivity" id="addActivityForm" class="me-3">
+    <div style="background-color: white; padding: 20px; border-radius: 10px; margin: 0 auto; max-width: 400px; text-align: center;">
+        <form method="post" asp-page-handler="AddActivity" id="addActivityForm" style="display: inline-block;">
             <input type="hidden" name="EventId" value="@Model.EventId" />
             <input type="hidden" name="ActivityName" value="New Activity" />
             <input type="hidden" name="Description" value="Details" />
-            <button type="submit" class="btn btn-success">Add Activity</button>
+
+            <!-- Centered, Larger Add Activity Button -->
+            <button type="submit" class="btn btn-success"
+                    style="padding: 15px 30px; font-size: 18px;">
+                Add Activity
+            </button>
         </form>
 
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-danger rounded-circle" data-bs-toggle="modal" data-bs-target="#tutorialModal">
+        <button type="button" class="btn btn-danger rounded-circle ms-3" data-bs-toggle="modal" data-bs-target="#tutorialModal" style="display: inline-block;">
             <i class="bi bi-question-circle"></i>
         </button>
     </div>
@@ -182,22 +186,29 @@
     }
 </script>
 <!-- Participants List -->
- <div class="container-fluid mt-4">
+<div class="container-fluid mt-4">
     @if (Model.Users != null && Model.Users.Any())
     {
-        <h4 class="text-dark bg-light p-3 rounded">Participants</h4>
-        <ul class="list-group">
-            @foreach (User participant in Model.Users)
-            {
-                <li class="list-group-item">
-                    <span class="badge text-white" style="background-color: @participant.VotingColor;">@participant.Name</span>
-                </li>
-            }
-        </ul>
+        <!-- Wrapper for header and list -->
+        <div class="bg-light p-3 rounded">
+            <h4 class="text-dark">Participants</h4>
+            <ul class="list-group">
+                @foreach (User participant in Model.Users)
+                {
+                    <li class="list-group-item">
+                        <span class="badge text-white" style="background-color: @participant.VotingColor;">@participant.Name</span>
+                    </li>
+                }
+            </ul>
+        </div>
     }
     else
     {
-        <p class="text-dark bg-light p-3 rounded">No participants found</p>
+        <!-- Wrapper for header and no participants message -->
+        <div class="bg-light p-3 rounded">
+            <h4 class="text-dark">Participants</h4>
+            <p class="text-dark">No participants found</p>
+        </div>
     }
 </div>
 
