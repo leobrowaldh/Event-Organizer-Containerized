@@ -35,14 +35,14 @@
 </nav>
 
 
-<div class="container-fluid mt-4">
+<div class="container-fluid mt-4" style="margin-bottom: 30px;" style="margin-bottom: 30px;">
     <div style="background-color: white; padding: 20px; border-radius: 10px; margin: 0 auto; max-width: 400px; text-align: center;">
         <form method="post" asp-page-handler="AddActivity" id="addActivityForm" style="display: inline-block;">
             <input type="hidden" name="EventId" value="@Model.EventId" />
             <input type="hidden" name="ActivityName" value="New Activity" />
             <input type="hidden" name="Description" value="Details" />
 
-            <!-- Centered, Larger Add Activity Button -->
+            <!-- Add Activity Button -->
             <button type="submit" class="btn btn-success"
                     style="padding: 15px 30px; font-size: 18px;">
                 Add Activity
