@@ -152,6 +152,11 @@
                 <p>The activity you added will appear on the event page so that people can vote on it.</p>
                 <h4>2) Vote on existing activities</h4>
                 <p>Press the "Vote" button to select the activity of your preference.</p>
+                @if (Model.CurrentUser.IsAdmin)
+                {
+                    <h4>3) End Voting</h4>
+                    <p>To end the voting and proceed to view the voting result, press the "End Voting" button. Make sure that everybody has voted before ending the voting.</p>
+                }
                 <p>May the best activity win!</p>
             </div>
             <div class="modal-footer">
@@ -201,8 +206,6 @@
 {
     <div class="container mt-4">
         <div class="card bg-white p-4 shadow-sm">
-            <p class="text-danger mb-3"><strong>Warning:</strong> Ending voting will lock the event and count the votes to determine the winner. This action cannot be undone.</p>
-
             <!-- End Voting Button (always visible) -->
             <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="@((Model.Activities == null || !Model.Activities.Any()) ? "#noActivitiesModal" : "#endVotingModal")">
                 End Voting
