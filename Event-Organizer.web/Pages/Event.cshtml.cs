@@ -46,6 +46,7 @@ namespace Event_Organizer.web.Pages
 
         public IActionResult OnGet()
         {
+            #region Setting cookies
             // Check if the "IsFirstTimeOnSite" cookie exists
             var cookie = Request.Cookies["IsFirstTimeOnEventPage"];
 
@@ -66,6 +67,7 @@ namespace Event_Organizer.web.Pages
                 // If the cookie exists, it's not the first visit
                 IsFirstTimeOnEventPage = false;
             }
+            #endregion
 
             Users = _dataAccess.GetEventUsers(EventId);
             ActiveEvent = _dataAccess.GetEvent(EventId);

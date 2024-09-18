@@ -134,6 +134,10 @@
                 <p>The activity you added will appear on the event page so that people can vote on it.</p>
                 <h4>2) Vote on existing activities</h4>
                 <p>Press the "Vote" button to select the activity of your preference.</p>
+                @if (Model.CurrentUser.IsAdmin)
+                {
+                    <p>To end the voting and proceed to view the voting result, press the "End Voting" button. Make sure that everybody has voted befor ending the voting.</p>
+                }
                 <p>May the best activity win!</p>
             </div>
             <div class="modal-footer">
