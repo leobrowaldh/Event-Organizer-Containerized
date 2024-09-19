@@ -225,7 +225,7 @@
     <div class="container mt-4">
         <div class="card p">
             <!-- End Voting Button -->
-            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="@((Model.Activities == null || !Model.Activities.Any()) ? "#noActivitiesModal" : "#endVotingModal")">
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="@((Model.Activities == null || !Model.Activities.Any(a => a.Users != null && a.Users.Any())) ? "#noActivitiesModal" : "#endVotingModal")">
                 End Voting
             </button>
         </div>
