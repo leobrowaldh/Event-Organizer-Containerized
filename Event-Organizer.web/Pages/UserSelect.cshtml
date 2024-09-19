@@ -5,7 +5,13 @@
 @{
 }
 
-<div class="container mt-5">
+<div class="container mt-3">
+    <!-- Instructional Box at the Top -->
+    <div class="alert alert-info text-center mx-auto" style="max-width: 500px;" role="alert">
+        <strong>Welcome to the User Selection Hub!</strong><br>
+        Select your name from the list to join an event, or if you're not listed, simply add your name using the form.
+    </div>
+
     <div class="row position-relative">
 
         <!-- Table on the right -->
@@ -36,7 +42,6 @@
                                     </td>
                                 </tr>
                             }
-
                         }
                         else
                         {
@@ -45,7 +50,6 @@
                             </tr>
                         }
                     </tbody>
-
                 </table>
                 @if (Model.Users != null && Model.Users.Any())
                 {
@@ -58,6 +62,7 @@
                 }
             </div>
         </div>
+
         <!-- Form on the left -->
         <div class="col-md-6 d-flex flex-column align-items-center">
             <p class="bg-primary text-white p-2 rounded mb-2 w-75 text-center">...Not in the list?</p>
@@ -86,7 +91,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>If your name appear on the list, select it, to proceed to the event</p>
+                <p>If your name appears on the list, select it to proceed to the event.</p>
                 <p>If your name does not appear on the list, add it by typing in your name and pressing the submit button.</p>
             </div>
             <div class="modal-footer">
