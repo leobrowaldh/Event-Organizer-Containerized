@@ -4,54 +4,23 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
+<div class="bg-white p-4 rounded shadow mt-4 text-center" style="max-width: 400px; margin: auto;">
+    <h1>Welcome to Event Organizer!</h1>
+    <h5>The place where the magic happens</h5>
+    <p></p>
+    <p>Start by naming your event.</p>
+</div>
+<div class="text-center mt-3">
     <form method="POST" class="bg-white p-4 rounded shadow" style="max-width: 400px; margin: auto;">
         <div class="position-relative">
             <div class="d-flex align-items-center">
                 <input asp-for="EventName" class="form-control pe-5" placeholder="Name your event" />
-                <!-- Spacer div to push the button outside the input field -->
-                <div class="ms-3 d-flex align-items-center">
-                    <!-- Button trigger modal with margin adjustment -->
-                    <button type="button" class="btn btn-danger rounded-circle";" data-bs-toggle="modal" data-bs-target="#tutorialModal">
-                        <i class="bi bi-question-circle"></i>
-                    </button>
-                </div>
             </div>
         </div>
         <button type="submit" class="btn btn-primary w-100 mt-3">Submit</button>
     </form>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="tutorialModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Welcome to Event Organizer!</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <h5>The place where the magic happens</h5>
-                <p></p>
-                <p>Start by naming your event.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Check if the modal should be shown -->
-@if (Model.FirstTimeCreatingEvent)
-{
-    <script>
-        window.onload = function () {
-            var tutorialModal = new bootstrap.Modal(document.getElementById('tutorialModal'));
-            tutorialModal.show();
-        };
-    </script>
-}
 
 
 

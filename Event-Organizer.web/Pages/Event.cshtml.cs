@@ -48,6 +48,28 @@ namespace Event_Organizer.web.Pages
 
         public IActionResult OnGet()
         {
+
+            Users = _dataAccess.GetEventUsers(EventId);
+            ActiveEvent = _dataAccess.GetEvent(EventId);
+            Activities = _dataAccess.GetEventActivities(EventId);
+
+            if (CurrentUserId.HasValue)
+            {
+                CurrentUser = _dataAccess.GetUser(CurrentUserId.Value);
+            }
+
+            if (CurrentUserId == null || !Users.Any(u => u.Id == CurrentUserId))
+            {
+                // If there's no user in session or the current user is not in the Users collection, redirect them to the UserSelect page
+                return RedirectToPage("/UserSelect", new { eventId = EventId });
+            }
+
+            if (ActiveEvent.VotingEnded == true)
+            {
+                // Redirect to results page if voting has ended
+                return RedirectToPage("/EventResults", new { eventId = EventId });
+            }
+
             #region Setting cookies
             // Check if the "IsFirstTimeOnSite" cookie exists
             var cookie = Request.Cookies["IsFirstTimeOnEventPage"];
@@ -70,27 +92,6 @@ namespace Event_Organizer.web.Pages
                 IsFirstTimeOnEventPage = false;
             }
             #endregion
-
-            Users = _dataAccess.GetEventUsers(EventId);
-            ActiveEvent = _dataAccess.GetEvent(EventId);
-            Activities = _dataAccess.GetEventActivities(EventId);
-
-            if (CurrentUserId.HasValue)
-            {
-                CurrentUser = _dataAccess.GetUser(CurrentUserId.Value);
-            }
-
-            if (CurrentUserId == null || !Users.Any(u => u.Id == CurrentUserId))
-            {
-                // If there's no user in session or the current user is not in the Users collection, redirect them to the UserSelect page
-                return RedirectToPage("/UserSelect", new { eventId = EventId });
-            }
-
-            if (ActiveEvent.VotingEnded == true)
-            {
-                // Redirect to results page if voting has ended
-                return RedirectToPage("/EventResults", new { eventId = EventId });
-            }
 
             return Page();
         }
