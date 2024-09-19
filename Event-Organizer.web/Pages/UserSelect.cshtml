@@ -14,13 +14,15 @@
                 <table class="table table-striped mb-0">
                     <thead>
                         <tr>
-                            <th class="bg-primary text-white p-2 rounded mb-2 w-75 text-center">Event participants</th>
+                            <th class="p-2 rounded mb-2 w-75 text-center" style="background-color: #03346E; color: #6EACDA;">Event participants</th>
                         </tr>
                     </thead>
                     <tbody>
                         @if (Model.Users != null && Model.Users.Any())
+
                         {
                             @foreach (User user in Model.Users)
+
                             {
                                 <tr>
                                     <td>
@@ -28,7 +30,7 @@
                                             <!-- Badge with user color -->
                                             <form method="post" asp-page-handler="SelectUser" asp-route-userId="@user.Id" style="display: inline;">
                                                 <input type="hidden" name="EventId" value="@Model.EventId" />
-                                                <button type="submit" class="btn badge text-white text-decoration-none" style="background-color: @user.VotingColor; border: none; padding: 10px; margin-right: 8px;">
+                                                <button type="submit" class="btn text-white text-decoration-none" style="background-color: @user.VotingColor; border: none; padding: 10px; margin-right: 8px;">
                                                     @user.Name
                                                 </button>
                                             </form>
@@ -38,7 +40,9 @@
                             }
 
                         }
+
                         else
+
                         {
                             <tr>
                                 <td colspan="1" class="text-center">Oh so empty...</td>
@@ -48,6 +52,7 @@
 
                 </table>
                 @if (Model.Users != null && Model.Users.Any())
+
                 {
                     <!-- Additional Text Box -->
                     <div class="custom-text-box">
@@ -60,17 +65,18 @@
         </div>
         <!-- Form on the left -->
         <div class="col-md-6 d-flex flex-column align-items-center">
-            <p class="bg-primary text-white p-2 rounded mb-2 w-75 text-center">...Not in the list?</p>
+            <p class="p-2 rounded mb-2 w-75 text-center" style="background-color: #03346E; color: #6EACDA;">...Not in the list?</p>
             <form method="POST" class="w-75 bg-white p-4 rounded shadow">
                 <div class="form-group">
                     <!-- Input field for the user's name -->
                     <input asp-for="NewUser" class="form-control" placeholder="Enter your name" />
-                    <button type="submit" class="btn btn-primary mt-2 w-100">Submit</button>
+                    <button type="submit" class="btn mt-2 w-100" style="background-color: #03346E; color: #6EACDA; border: none;">Submit</button>
+                </div>
             </form>
         </div>
 
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-danger rounded-circle position-absolute top-0 end-0" data-bs-toggle="modal" data-bs-target="#tutorialModal">
+        <button type="button" class="btn btn-danger rounded-circle position-absolute top-0 end-0" data-bs-toggle="modal" data-bs-target="#tutorialModal" style="width: 50px; height: 50px; display: flex; justify-content: center; align-items: center;">
             <i class="bi bi-question-circle"></i>
         </button>
 
@@ -86,7 +92,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>If your name appear on the list, select it, to proceed to the event</p>
+                <p>If your name appears on the list, select it to proceed to the event.</p>
                 <p>If your name does not appear on the list, add it by typing in your name and pressing the submit button.</p>
             </div>
             <div class="modal-footer">
@@ -98,6 +104,7 @@
 
 <!-- Check if the modal should be shown -->
 @if (Model.IsFirstTimeOnUserList)
+
 {
     <script>
         window.onload = function () {
