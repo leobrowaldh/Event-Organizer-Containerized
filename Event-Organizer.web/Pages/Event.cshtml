@@ -7,36 +7,31 @@
     var eventName = Model.ActiveEvent != null ? Model.ActiveEvent.Name : "No Event Found";
     ViewData["Title"] = $"Welcome {userName} to {eventName}";
 }
-<form method="get" action="/UserSelect">
-    <input type="hidden" name="eventId" value="@Request.Query["eventId"].ToString()" />
-    <button type="submit" class="btn btn-primary" style="margin-top: 5px;">Go back to user selection</button>
-</form>
 
+<nav class="navbar bg-body-tertiary mb-5 mt-4">
+    <div class="container-fluid">
+        <div class="row w-100 align-items-center">
+            <!-- Centered Welcome Message -->
+            <div class="col text-center">
+                <h1 style="color: #021526; text-shadow: 2px 2px 4px #03346E;">
+                    Welcome @(Model.CurrentUser?.Name ?? ""), to @(Model.ActiveEvent?.Name ?? "No Event Found")
+                </h1>
 
-<nav class="navbar bg-body-tertiary mb-4">
-    <div class="container-fluid d-flex justify-content-center">
-        <h1 class="text-dark bg-light p-3 rounded">
-            Welcome
-            @if (Model.CurrentUser?.VotingColor != null)
-            {
-                <span class="badge text-white" style="background-color: @Model.CurrentUser.VotingColor;">
-                    @Model.CurrentUser?.Name
-                </span>
-            }
-            else
-            {
-                <span class="badge text-white" style="background-color: #007bff;">
-                    @Model.CurrentUser?.Name
-                </span>
-            }
-            to @(Model.ActiveEvent?.Name ?? "No Event Found")
-        </h1>
+            </div>
+            <!-- Right-Aligned Button -->
+            <div class="col text-end">
+                <form method="get" action="/UserSelect" class="d-inline-block">
+                    <input type="hidden" name="eventId" value="@Request.Query["eventId"].ToString()" />
+                    <button type="submit" class="btn btn-primary">Change User</button>
+                </form>
+            </div>
+        </div>
     </div>
 </nav>
 
 
-<div class="container-fluid mt-4" style="margin-bottom: 30px;" style="margin-bottom: 30px;">
-    <div style="background-color: white; padding: 20px; border-radius: 10px; margin: 0 auto; max-width: 400px; text-align: center;">
+<div class="container-fluid mt-4" style="margin-bottom: 30px; background-color: #E2E2B6; max-width:300px; padding: 20px; border-radius:20px">
+    <div style="padding: 20px; border-radius: 10px; margin: 0 auto; max-width: 400px; text-align: center;">
         <form method="post" asp-page-handler="AddActivity" id="addActivityForm" style="display: inline-block;">
             <input type="hidden" name="EventId" value="@Model.EventId" />
             <input type="hidden" name="ActivityName" value="New Activity" />
@@ -44,7 +39,7 @@
 
             <!-- Add Activity Button -->
             <button type="submit" class="btn btn-success"
-                    style="padding: 15px 30px; font-size: 18px;">
+                    style="padding: 15px 30px; font-size: 18px; background-color: #03346E; color: #E2E2B6; border: none;">
                 Add Activity
             </button>
         </form>
@@ -108,7 +103,7 @@
                                 <form method="post" asp-page-handler="Vote" style="display:inline;" class="m-2 w-100">
                                     <input type="hidden" name="EventId" value="@Model.EventId" />
                                     <input type="hidden" name="activityId" value="@activity.Id" />
-                                    <button type="submit" class="btn btn-primary w-100">VOTE</button>
+                                    <button type="submit" class="btn btn-primary w-100" style="background-color: #03346E; color: #6EACDA; border: none;">VOTE</button>
                                 </form>
                             </div>
 
@@ -212,12 +207,12 @@
     }
 </div>
 
-<!-- End Voting Button and Warning (only dispolayed for admin user.)-->
+<!-- End Voting Button (only dispolayed for admin user.)-->
 @if (Model.ActiveEvent != null && Model.ActiveEvent.OpenForEditing && Model.CurrentUser is not null && Model.CurrentUser.IsAdmin)
 {
     <div class="container mt-4">
-        <div class="card bg-white p-4 shadow-sm">
-            <!-- End Voting Button (always visible) -->
+        <div class="card p">
+            <!-- End Voting Button -->
             <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="@((Model.Activities == null || !Model.Activities.Any()) ? "#noActivitiesModal" : "#endVotingModal")">
                 End Voting
             </button>
