@@ -5,7 +5,13 @@
 @{
 }
 
-<div class="container mt-5">
+<div class="container mt-3">
+    <!-- Instructional Box at the Top -->
+    <div class="alert alert-info text-center mx-auto" style="max-width: 500px;" role="alert">
+        <strong>Welcome to the User Selection Hub!</strong><br>
+        Select your name from the list to join an event, or if you're not listed, simply add your name using the form.
+    </div>
+
     <div class="row position-relative">
 
         <!-- Table on the right -->
@@ -38,7 +44,6 @@
                                     </td>
                                 </tr>
                             }
-
                         }
 
                         else
@@ -49,7 +54,6 @@
                             </tr>
                         }
                     </tbody>
-
                 </table>
                 @if (Model.Users != null && Model.Users.Any())
 
@@ -63,6 +67,7 @@
                 }
             </div>
         </div>
+
         <!-- Form on the left -->
         <div class="col-md-6 d-flex flex-column align-items-center">
             <p class="p-2 rounded mb-2 w-75 text-center" style="background-color: #03346E; color: #6EACDA;">...Not in the list?</p>
