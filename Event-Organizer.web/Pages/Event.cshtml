@@ -13,8 +13,21 @@
         <div class="row w-100 align-items-center">
             <!-- Centered Welcome Message -->
             <div class="col text-center">
-                <h1 style="color: #021526; text-shadow: 2px 2px 4px #03346E;">
-                    Welcome @(Model.CurrentUser?.Name ?? ""), to @(Model.ActiveEvent?.Name ?? "No Event Found")
+                <h1 class="text-dark bg-light p-3 rounded">
+                    Welcome
+                    @if (Model.CurrentUser?.VotingColor != null)
+                    {
+                        <span class="badge text-white" style="background-color: @Model.CurrentUser.VotingColor;">
+                            @Model.CurrentUser?.Name
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge text-white" style="background-color: #007bff;">
+                            @Model.CurrentUser?.Name
+                        </span>
+                    }
+                    to @(Model.ActiveEvent?.Name ?? "No Event Found")
                 </h1>
 
             </div>
