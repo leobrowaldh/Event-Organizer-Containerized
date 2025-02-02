@@ -13,7 +13,7 @@ builder.Services.AddScoped<IDataAccess, DataAccess>();
 builder.Services.AddDbContext<EventOrganizerDbContext>(
     options =>
         options.UseSqlServer(
-            builder.Configuration.GetConnectionString("AzureConnection")));
+            builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add session support
 builder.Services.AddSession(options =>
