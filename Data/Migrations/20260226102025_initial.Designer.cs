@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(EventOrganizerDbContext))]
-    [Migration("20240910103837_initial-147.0b")]
-    partial class initial1470b
+    [Migration("20260226102025_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("ProductVersion", "10.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -62,6 +62,9 @@ namespace Data.Migrations
                     b.Property<bool>("OpenForEditing")
                         .HasColumnType("bit");
 
+                    b.Property<bool?>("VotingEnded")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.ToTable("Events");
@@ -80,6 +83,9 @@ namespace Data.Migrations
 
                     b.Property<Guid>("EventId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -112,12 +118,13 @@ namespace Data.Migrations
                 {
                     b.HasOne("Data.Models.Activity", "Activity")
                         .WithMany("Users")
-                        .HasForeignKey("ActivityId");
+                        .HasForeignKey("ActivityId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("Data.Models.Event", "Event")
                         .WithMany("Users")
                         .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Activity");
